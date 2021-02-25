@@ -1,0 +1,129 @@
+---
+title: "MS4S09 Coursework 2 - 2020/21"
+subtitle: "17076749"
+author: "Mark Baber"
+date: "xx/xx/2021"
+output: pdf_document
+---
+
+This report will be my project on time series data mining, where there will be some R scripting which will go through a few tasks to get a better understanding of a few datasets.
+
+Lets first import the packages which will be used throughout this report.
+
+```{r packages, include=FALSE}
+library(magrittr)
+# set the seed
+set.seed(17076749)
+```
+
+# Task 1 – Getting the data (10%)
+This section of the report will go over how to get the datasets from a URL, it has been asked that the dataset not be downloaded individually and that the use of functions be used. 
+
+My way of understanding this would be to get a list of the 10 districts including the '.txt' and we can use a function to get a certain district.
+
+```{r}
+# create a list of districts
+districts <- list("Northern_Ireland.txt", "Scotland_N.txt",
+                  "Scotland_E.txt", "Scotland_W.txt",
+                  "England_E_and_NE.txt", "England_NW_and_N_Wales.txt",
+                  "Midlands.txt", "East_Anglia.txt",
+                  "England_SW_and_S_Wales.txt", "England_SE_and_Central_S.txt")
+
+# create 3 different URLS (max, mean, min) for the districts
+urlMAX = paste("https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/",districts[], sep = "")
+urlMEAN = paste("https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/",districts[], sep = "")
+urlMIN = paste("https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/",districts[], sep = "")
+
+# make a function to pass through url x
+getMAX <- function(x) {
+  #print(search_url[x])
+  fread(urlMAX[x], fill = TRUE)
+}
+
+getMEAN <- function(x) {
+  #print(search_url[x])
+  fread(urlMEAN[x], fill = TRUE)
+}
+
+getMIN <- function(x) {
+  #print(search_url[x])
+  fread(urlMIN[x], fill = TRUE)
+}
+
+```
+Now we all of that set up, we can look to test the functions to see if we can get the required datasets.
+
+```{r}
+# get the first district max temps
+myData <- getMAX(1)
+# save just the first row for the years
+myYears <- myData[7:143,1]
+colnames(myYears) <- 'Year'
+# start at 2 to remove the year
+myData <- myData[,2:13] 
+head(myData)
+# remove rows 1-5
+myData <- myData[6:143]
+head(myData)
+```
+Now here we can see we have managed to only take the months Jan - Dec but the first columns are the month. Lets use this first columns to rename them.
+
+```{r}
+# get the months from dataset
+months <- myData[1,1:12]
+# check to make sure we got them
+head(months)
+# change to char
+months <- as.character(months)
+months
+# is.character(months)
+```
+Now to change the colnames from V2-V13 to the months Jan-Dec
+```{r}
+# Now we have the months, lets delete them from the dataset
+myData <- myData[-1,1:12]
+# make sure it worked
+head(myData)
+# now to set the names
+colnames(myData) <- months
+# make sure it worked again
+head(myData)
+```
+# we might need to convert to vector
+```{r vector, include=FALSE}
+# convert to vector
+myData %>% t() %>% as.vector() # this takes a while.
+```
+
+# Task 2 – R programming (5%)
+
+Write an R script to identify the district and date (year and month) of the highest and the lowest max, min and mean temperature(six results in total)
+
+```{r}
+
+```
+
+
+# Task 3 – Exploratory Data Analysis (30%)
+
+# Task 4 – Trend and Seasonality (20%)
+```{r}
+# TREND 
+tempD <- ts(myData, start = 1884, frequency = 12)
+tempD %>% ts(start = 1879, frequency = 12) -> tempD
+tempD %>% ts.plot()
+```
+
+```{r}
+# TREND 
+tempD <- ts(myData, start = 1884, frequency = 1/12)
+tempD %>% ts(start = 1884, frequency = 12) -> tempD
+tempD %>% ts.plot()
+```
+
+
+# Task 5 – ARMA and Forecasting (25%)
+
+# Report (10%)
+
+Leave this section blank for marking

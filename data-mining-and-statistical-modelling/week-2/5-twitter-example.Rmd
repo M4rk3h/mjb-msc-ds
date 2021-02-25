@@ -1,0 +1,100 @@
+---
+title: "Text Mining - Twitter"
+author: "Penny Holborn"
+date: "1 December 2020"
+output: html_document
+---
+
+```{r}
+install.packages("tm")
+install.packages("wordcloud")
+install.packages("twitteR")
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+library(tm) #Text mining
+library(SnowballC) #Required for stemming
+library(twitteR)
+library(wordcloud)
+```
+
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+#load credentials
+API_Key <- "EU1OVGMpPt9Edg0t8YSNK96sq"
+API_secret <- "XyKQTaAreQ2f8h1oRYKBSGeVrN1lBugE7vZC78XUCg4JVgtvQJ"
+access_token <- "755358007-Jpa62zD8fddXVAfs4ef0d69h5arMNiBUWHjrQhxN"
+access_secret <- "yH2SVc3vr5Qblm3vZOLFyuAFK2Xaew5c7u4BKkHcd0vGh"
+# set the auth
+setup_twitter_oauth(API_Key, API_secret, access_token, access_secret)
+```
+
+```{r}
+# retrieve the first 100 tweets (or all tweets if fewer than 50)
+# from the user timeline of @XXXXX
+# rdmTweets <- searchTwitter('#Ubuntu', n=100)
+rdmTweets <- userTimeline("@Ubuntu", n=100)
+n <- length(rdmTweets)
+rdmTweets[1:5]
+```
+
+```{r}
+#Store tweets in list 
+tweetList <- list(rdmTweets)
+```
+
+```{r}
+#The tweets are first converted to a data frame and then to a corpus.
+df <- do.call("rbind", lapply(rdmTweets, as.data.frame))
+# load tweets as a corpus
+df <- Corpus(VectorSource(df$text))
+#inspect(df)
+```
+
+```{r}
+# Clean the text
+getTransformations()
+myTweets <- tm_map(df, content_transformer(tolower))
+myTweets <- tm_map(df, removeNumbers)
+myTweets <- tm_map(df, removeWords, stopwords(kind = "en"))
+myTweets <- tm_map(df, removePunctuation)
+myTweets <- tm_map(df, stripWhitespace)
+myTweets <- tm_map(df, stemDocument)
+# custom stop words
+myTweets <- tm_map(df, removeWords, c("and", "the", "how")) 
+#inspect(myTweets)
+```
+
+
+```{r}
+#Transform the text
+toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
+
+tweetsT <- tm_map(myTweets, toSpace, "/")
+tweetsT <- tm_map(myTweets, toSpace, "@")
+tweetsT <- tm_map(myTweets, toSpace, "\\|")
+```
+
+```{r}
+#Create document term matrix
+dtm <- TermDocumentMatrix(myTweets)
+m <- as.matrix(dtm)
+v <- sort(rowSums(m),decreasing=TRUE)
+d <- data.frame(word = names(v),freq=v)
+head(d, 10)
+```
+
+```{r}
+#Create a word cloud
+set.seed(1234)
+wordcloud(words = d$word, freq = d$freq, min.freq = 1,
+          max.words=100, random.order=F, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
+
+```

@@ -1,0 +1,5 @@
+"0","saData <- saData %>% "
+"0","  unnest_tokens(word, text)"
+"0",""
+"0","saData %>% "
+"0","  head(n = 5)"

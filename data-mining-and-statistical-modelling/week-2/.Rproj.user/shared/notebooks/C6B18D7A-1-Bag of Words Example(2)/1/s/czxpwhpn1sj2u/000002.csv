@@ -1,0 +1,7 @@
+"0","toSpace <- content_transformer(function (x , pattern ) gsub(pattern, "" "", x))"
+"0","docs <- tm_map(docs, toSpace, ""/"")"
+"2","transformation drops documents"
+"0","docs <- tm_map(docs, toSpace, ""@"")"
+"2","transformation drops documents"
+"0","docs <- tm_map(docs, toSpace, ""\\|"")"
+"2","transformation drops documents"

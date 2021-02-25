@@ -1,0 +1,99 @@
+---
+title: "Text Mining - Twitter"
+author: "Penny Holborn"
+date: "1 December 2020"
+output: html_document
+---
+
+```{r}
+#install.packages("tm")
+#1install.packages("wordcloud")
+#1install.packages("SnowballC")
+#install.packages("twitteR")
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(tm) #Text mining
+library(SnowballC) #Required for stemming
+library(twitteR)
+library(wordcloud)
+```
+
+```{r}
+#load credentials
+API_key <- "eeQ38cVmzrcLfy0FrDn9Xrgq8"
+API_secret<- "sMmeS8qFCgSWrPWh4AwTS4eqyUZlGLQuKivEp9JiwBw9vl1Kbp"
+bearer_token <- "AAAAAAAAAAAAAAAAAAAAAOMeKQEAAAAAdukarGkEcKuAac2Lwdm97jJKXR8%3DW5m1GIlSJPycQkVwSeC7UYhPvxU1VWedhdHW1a2Y4UJi6P0b89"
+access_token <-"1334064608345272320-CJzNNnGB8GED8gNvUQ1Fiv1Oa6Sdkh"
+access_secret <-"oShturPkxwPiM1z2sFmBCLk3dtau1J7e7UCLnpDeWoLW1"
+#set up to authenticate
+setup_twitter_oauth(API_key ,API_secret,access_token, access_secret)
+```
+
+```{r}
+# retrieve the first 100 tweets (or all tweets if fewer than 50)
+# from the user timeline of @pennyholborn
+rdmTweets <- userTimeline("@pennyholborn", n=10)
+n <- length(rdmTweets)
+rdmTweets[1:3]
+```
+
+```{r}
+tweets <- searchTwitter('#Covid', n=100)
+head(tweets)
+```
+
+```{r}
+#The tweets are first converted to a data frame and then to a corpus.
+df <- do.call("rbind", lapply(tweets, as.data.frame))
+# Load the data as a corpus
+df <- Corpus(VectorSource(df$text))
+inspect(df)
+```
+
+```{r}
+# Convert the text to lower case
+docs <- tm_map(df, content_transformer(tolower))
+# Remove numbers
+docs <- tm_map(df, removeNumbers)
+# Remove english common stopwords
+docs <- tm_map(df, removeWords, stopwords("english"))
+# Remove your own stop word
+# specify your stopwords as a character vector
+docs <- tm_map(df, removeWords, c("http","https:", "and", "the")) 
+# Remove punctuations
+docs <- tm_map(df, removePunctuation)
+# Eliminate extra white spaces
+docs <- tm_map(df, stripWhitespace)
+# Text stemming
+docs <- tm_map(df, stemDocument)
+```
+Transformation is performed using tm_map() function to replace, for example, special characters from the text. Replacing "/", "@" and "|" with space:
+
+```{r}
+toSpace <- content_transformer(function (x , pattern ) gsub(pattern, " ", x))
+docs <- tm_map(docs, toSpace, "/")
+docs <- tm_map(docs, toSpace, "@")
+docs <- tm_map(docs, toSpace, "\\|")
+```
+
+```{r}
+dtm <- TermDocumentMatrix(df)
+m <- as.matrix(dtm)
+v <- sort(rowSums(m),decreasing=TRUE)
+d <- data.frame(word = names(v),freq=v)
+head(d, 10)
+```
+
+```{r}
+set.seed(1234)
+wordcloud(words = d$word, freq = d$freq, min.freq = 1,
+          max.words=100, random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
+```

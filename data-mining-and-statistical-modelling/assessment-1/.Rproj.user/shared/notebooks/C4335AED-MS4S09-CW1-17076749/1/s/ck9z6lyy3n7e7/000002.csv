@@ -1,0 +1,6 @@
+"0","saData <- saData %>% "
+"0","  anti_join(stop_words) # 27411"
+"2","Joining, by = ""word""
+"
+"0","saData %>% "
+"0","  head(n = 5)"

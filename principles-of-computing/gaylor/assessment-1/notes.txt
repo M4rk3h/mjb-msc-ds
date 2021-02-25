@@ -1,0 +1,22 @@
+Students 1..* - 0..* Courses
+CurrentActualCourse 1..* - 0..1 AllocatedTrainers
+Trainers
+Accomodation 0..1 - 0..* Students 
+
+Student Applies for a Course
+CurrentCourse (ActualCourse) - Accomodation Notification
+TrainingRoom 1..1 - 1..1 ActualCourse
+TypeOfCourse
+StudentsWaiting
+
+CourseType 
+CourseCode PK, CourseTitle
+ActualCourse
+CourseCode PK, StartDate, Duration, MaxNoStudents 
+
+
+-Who is teaching the ActualCourse, what room is it being held in?
+-How do we know who CAN teach a particular course? 
+-Are all rooms able to teach all actualcourses?
+
+Hope by answering the questions above will guide you re: what entity is connected to what other entities.

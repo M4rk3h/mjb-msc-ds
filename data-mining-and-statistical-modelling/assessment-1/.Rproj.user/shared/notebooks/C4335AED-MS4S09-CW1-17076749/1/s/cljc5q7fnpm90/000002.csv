@@ -1,0 +1,4 @@
+"0","# get a copy of the data for Sentiment Analysis section"
+"0","saData <- Data "
+"0","saData %>% "
+"0","  head(n = 5)"

@@ -1,0 +1,7 @@
+"0","barplot(d[1:10,]$freq, "
+"0","        las = 2, "
+"0","        names.arg = d[1:10,]$word,"
+"0","        col = myFill, main =""Top 10 words"","
+"0","        xlab = ""Frequency"","
+"0","        ylab = ""Word"","
+"0","        horiz = TRUE)"

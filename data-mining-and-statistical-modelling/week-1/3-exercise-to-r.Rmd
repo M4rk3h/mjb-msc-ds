@@ -1,0 +1,85 @@
+---
+title: "Introduction to R Exercises"
+author: "Mark Baber"
+date: "26/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Exercise 1 - Lists
+```{r}
+# 1 - If:
+p <- c(2,7,8)
+q <- c("A","B","C")
+x <- list(p,q)
+# then what is the value of x[2]
+x[2] # = "A","B","C"
+```
+
+```{r}
+# 2 If:
+w <- c(2,7,8)
+v <- c("A","B","C")
+x <- list(w,v)
+# then which statement replaces "A" in x with "K"
+# a
+# x[[2]] <- "K"
+# b 
+x[[2]][1] <- "K"
+# c
+#x[[1]][2] <- "K"
+print(x)
+```
+
+```{r}
+# 3. If 
+a <- list ("x"=5, "y"=10, "z"=15)
+# which R statement will give the sum of all elements in a?
+# a
+# sum(a)
+# b
+# sum(list(a))
+# c
+sum(unlist(a))
+```
+
+# Exercise 2 - Data Frames
+```{r}
+# 1
+names = c("Alex","Lilly","Mark","Oliver","Martha","Lucas","Caroline")
+age = c(25,31,23,52,76,49,26)
+height = c(177,163,190,179,163,183,164)
+weight = c(57,69,83,75,70,83,53)
+sex = c("F","F","M","M","F","M","F")
+
+people <- data.frame(row.names=names, age, height, weight, sex)
+people
+```
+
+```{r}
+# 2
+# Duplicate
+```
+
+```{r}
+# 3 Use VADeaths 
+summary(VADeaths)
+str(VADeaths)
+# Make sure it's a Data frame
+myData <- as.data.frame(row.names="AgeGroups", VADeaths)
+# double check
+class(myData)
+# create a new variables, names Total
+# which is a sum of each row
+Total <- rowSums(VADeaths)
+Total <- as.data.frame(Total)
+print(Total)
+myData
+myData$Total = rowSums(myData[,c(-1)])
+myData <- myData[,c(5,1,2,3,4)]
+
+colnames(myData)
+```

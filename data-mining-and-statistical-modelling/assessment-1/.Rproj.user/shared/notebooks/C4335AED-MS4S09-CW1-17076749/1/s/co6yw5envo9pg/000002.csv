@@ -1,0 +1,6 @@
+"0","afinnSA <- cleanSA %>%"
+"0","  inner_join(get_sentiments('afinn')) %>%"
+"0","  count(word, value, sort = TRUE)"
+"2","Joining, by = ""word""
+"
+"0","afinnSA[1:10,]"

@@ -1,0 +1,2 @@
+"0","ldaTopics <- tidy(myLDA, matrix=""beta"")"
+"0","ldaTopics"

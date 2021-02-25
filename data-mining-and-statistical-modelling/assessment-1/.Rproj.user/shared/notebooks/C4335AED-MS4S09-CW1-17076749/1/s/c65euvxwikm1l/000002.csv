@@ -1,0 +1,8 @@
+"0","allSA %>%"
+"0","  ggplot(aes(index, sentiment, fill = method)) +"
+"0","  geom_col(show.legend = F) +"
+"0","  facet_wrap(~method, ncol = 1, scales = ""free_x"") +"
+"0","  labs(title = ""Comparing sentiments"","
+"0","  subtitle = ""Between the lexicon dictionaries, bing and nrc"","
+"0","  y = ""Emotion"", x = ""Observations"")"
+"0",""

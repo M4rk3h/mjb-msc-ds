@@ -1,0 +1,7 @@
+"0","#Using the density plots/ histograms, as well as the sum() function when needed, determine suitable cut off points for outliers
+sum(Data$Debt_Ratio > 100) / 150000
+"
+"1","[1]"
+"1"," 0.1625333"
+"1","
+"

@@ -1,0 +1,4 @@
+"0","# change to corpus using TM packages"
+"0","myCorp <- Corpus(VectorSource(topicD$word))"
+"0","# now convert to DocumentTermMatrix and clean it"
+"0","myDTM <- DocumentTermMatrix(myCorp, control = list())"

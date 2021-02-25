@@ -1,0 +1,6 @@
+ROC
+https://www.graphpad.com/guides/prism/8/curve-fitting/reg_logistic_roc_curves.htm
+
+https://thestatsgeek.com/2014/05/05/area-under-the-roc-curve-assessing-discrimination-in-logistic-regression/
+
+https://video.sas.com/detail/video/4363855630001/introduction-to-roc-curves-and-proc-logistic

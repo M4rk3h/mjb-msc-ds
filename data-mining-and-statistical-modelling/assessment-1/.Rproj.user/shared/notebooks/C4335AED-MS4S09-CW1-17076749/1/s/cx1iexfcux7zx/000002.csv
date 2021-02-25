@@ -1,0 +1,2 @@
+"0","#Read in the data"
+"0","Data <- read.csv(""airline_coursework(1).csv"", stringsAsFactors = FALSE)"

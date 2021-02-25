@@ -1,0 +1,4 @@
+"0","# Now we have the months, lets delete them from the dataset"
+"0","globaltemps <- globaltemps[-1,1:12]"
+"0","# make sure it worked"
+"0","head(globaltemps)"

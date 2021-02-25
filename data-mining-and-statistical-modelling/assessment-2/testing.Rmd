@@ -1,0 +1,111 @@
+```{r packages, include=FALSE}
+library(magrittr)
+library(data.table)
+```
+
+
+```{r}
+## NOTES FROM HERE
+districts <- list("Northern_Ireland.txt", "Scotland_N.txt",
+                  "Scotland_E.txt", "Scotland_W.txt",
+                  "England_E_and_NE.txt", "England_NW_and_N_Wales.txt",
+                  "Midlands.txt", "East_Anglia.txt",
+                  "England_SW_and_S_Wales.txt", "England_SE_and_Central_S.txt")
+
+# create 3 different URLS (max, mean, min) for the districts
+urlMAX = paste("https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/",districts[], sep = "")
+urlMEAN = paste("https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/",districts[], sep = "")
+urlMIN = paste("https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/",districts[], sep = "")
+
+# make a function to pass through url x
+getMAX <- function(x) {
+  #print(search_url[x])
+  fread(urlMAX[x], fill = TRUE)
+}
+
+getMEAN <- function(x) {
+  #print(search_url[x])
+  fread(urlMEAN[x], fill = TRUE)
+}
+
+getMIN <- function(x) {
+  #print(search_url[x])
+  fread(urlMIN[x], fill = TRUE)
+}
+```
+
+
+```{r}
+## CLEAN
+globaltemps <- getMAX(1)
+# only take cols 2-13
+globaltemps <- globaltemps[,1:13]
+head(globaltemps)
+# remove rows 1-5
+globaltemps <- globaltemps[6:143]
+head(globaltemps)
+```
+
+```{r}
+# get the months from dataset
+months <- globaltemps[1,1:12]
+# check to make sure we got them
+head(months)
+# change to char
+months <- as.character(months)
+is.character(months)
+```
+
+
+```{r}
+# Now we have the months, lets delete them from the dataset
+globaltemps <- globaltemps[-1,1:12]
+# make sure it worked
+head(globaltemps)
+# now to set the names
+colnames(globaltemps) <- months
+# make sure it worked again
+head(globaltemps)
+```
+
+
+```{r}
+# create a function that accepts as arguments a time series dataset
+# and the kind of model that we want to create (linear, quadratic, cubic,...)
+# and gives as output the model with given parameters
+create.model <- function(timeseries, degree) {
+  # degree vector
+  degree.vect = c(1,2,3)
+  # create a switch case
+  degree.value <- switch(degree,
+                         linear    = degree.vect[1],
+                         quadratic = degree.vect[2],
+                         cubic     = degree.vect[3])
+  # 
+  c(timeseries,
+    c("poly(time,",
+      as.character(degree.value),
+      ", raw = TRUE)") %>% paste(collapse = "")) %>%
+    paste(collapse = " ~ ") %>%
+    as.formula() %>%
+    lm() -> model
+  # return 
+  return(model %>% fitted())
+}
+```
+```{r}
+# run function against globaltemps
+globaltemps = ts(globaltemps)
+
+globaltemps %>% create.model(1)
+```
+
+
+
+```{r}
+plot(globaltemps, type = 'l')
+lines(create.model("globaltemps", "linear"),    col = 'green',  lwd = 3)
+lines(create.model("globaltemps", "quadratic"), col = 'purple', lwd = 3)
+lines(create.model("globaltemps", "cubic"),     col = 'red',    lwd = 3)
+```
+

@@ -1,0 +1,8 @@
+"0","afinnSA %>%"
+"0","  filter(n > 40) %>%"
+"0","  mutate(word = reorder(word, n)) %>%"
+"0","  ggplot(aes(n, word, color=word)) +"
+"0","  geom_col(fill='#ffffff') +"
+"0","  labs(title = ""Highest recoccouring word"","
+"0","       subtitle = ""Within the lexicon dictionary, afinn"","
+"0","       y = ""Terms"", x = ""Observations"")"

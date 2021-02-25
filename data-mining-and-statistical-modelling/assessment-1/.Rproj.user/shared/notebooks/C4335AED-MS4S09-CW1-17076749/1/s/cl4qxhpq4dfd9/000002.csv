@@ -1,0 +1,6 @@
+"0","toSpace <- "
+"0","  content_transformer(function (x , pattern ) gsub(pattern, "" "", x))"
+"0",""
+"0","tText <- tm_map(dcText, toSpace, ""/"")"
+"0","tText <- tm_map(dcText, toSpace, ""@"")"
+"0","tText <- tm_map(dcText, toSpace, ""\\|"")"

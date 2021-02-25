@@ -1,0 +1,2 @@
+"0","# afinn"
+"0","get_sentiments(""afinn"") %>% head(n = 5)"

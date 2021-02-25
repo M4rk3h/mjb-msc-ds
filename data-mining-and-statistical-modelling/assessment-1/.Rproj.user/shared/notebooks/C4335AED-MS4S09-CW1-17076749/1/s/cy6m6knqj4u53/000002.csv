@@ -1,0 +1,7 @@
+"0","bingSA <- cleanSA %>%"
+"0","  inner_join(get_sentiments(""bing"")) %>%"
+"0","  count(word, sort = T)"
+"2","Joining, by = c(""sentiment"", ""word"")
+"
+"0","bingSA %>% "
+"0","  head(n = 5)"
