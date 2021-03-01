@@ -1,3 +1,0 @@
-"0","# remove rows 1-5"
-"0","myData <- myData[6:143]"
-"0","head(myData)"

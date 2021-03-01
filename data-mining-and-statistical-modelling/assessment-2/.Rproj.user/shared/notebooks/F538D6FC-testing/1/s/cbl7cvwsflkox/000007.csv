@@ -1,5 +1,0 @@
-"0","globaltemps %>% create.model(1)
-"
-"2","Error in rep(X, times = ceiling(length(Y)/length(X))) : 
-  attempt to replicate an object of type 'closure'
-"

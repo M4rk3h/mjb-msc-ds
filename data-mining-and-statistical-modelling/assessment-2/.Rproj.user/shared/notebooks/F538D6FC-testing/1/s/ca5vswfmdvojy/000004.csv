@@ -1,4 +1,0 @@
-"0","# get the months from dataset"
-"0","months <- globaltemps[1,1:12]"
-"0","# check to make sure we got them"
-"0","head(months)"

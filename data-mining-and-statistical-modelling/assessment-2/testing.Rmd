@@ -1,111 +1,135 @@
-```{r packages, include=FALSE}
+---
+title: "MS4S09 Coursework 2 - 2020/21"
+subtitle: "17076749"
+author: "Mark Baber"
+date: "xx/xx/2021"
+output: pdf_document
+---
+
+This report will look at using data mining techniques on a time series dataset. This report will be broken down into several parts, from getting the data, exploring the data, looking into trend and seasonality of the data before continuing onto a more indepth analysis. This indepth analysis will cover ARMA and forecasting.
+
+All of this will be done using R and Rstudio, with the use of limited packages which has been added below:
+- magrittr
+- tseries
+- knitr
+
+```{r packages, message=FALSE, warning=FALSE, include=FALSE}
 library(magrittr)
-library(data.table)
+library(tseries)
+library(knitr)
 ```
 
+# 1 Task 1 – Getting the data (10%)
+Write an R script that downloads the data directly from the website for the 30 time series (3 time series for each of the 10 districts) using the “Year ordered statistics” option, and selecting the districts listed. Download up to December 2021.
+
+Create the 30 time-series objects in R to store the data you have downloaded.
+Remember to specify the appropriate starting point and frequency.
 
 ```{r}
-## NOTES FROM HERE
-districts <- list("Northern_Ireland.txt", "Scotland_N.txt",
-                  "Scotland_E.txt", "Scotland_W.txt",
-                  "England_E_and_NE.txt", "England_NW_and_N_Wales.txt",
-                  "Midlands.txt", "East_Anglia.txt",
-                  "England_SW_and_S_Wales.txt", "England_SE_and_Central_S.txt")
+# set address
+address <- "https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/"
+# set features
+features <- c("Tmax", "Tmean", "Tmin")
+# create a list of districts
+districts <- c("Northern_Ireland",
+                  "Scotland_N",
+                  "Scotland_E",
+                  "Scotland_W",
+                  "England_E_and_NE",
+                  "England_NW_and_N_Wales",
+                  "Midlands",
+                  "East_Anglia",
+                  "England_SW_and_S_Wales",
+                  "England_SE_and_Central_S")
+```
 
-# create 3 different URLS (max, mean, min) for the districts
-urlMAX = paste("https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/",districts[], sep = "")
-urlMEAN = paste("https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/",districts[], sep = "")
-urlMIN = paste("https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/",districts[], sep = "")
+The section above looked to set up the base url for the datasets, the 3 different features which changed within the url and the 10 districts which will be needed for the url. Before going further into creating a function, there was some pre-analysis on the scraped dataset to calculate the number of rows and looked into which rows & columns should be omitted.
 
-# make a function to pass through url x
-getMAX <- function(x) {
-  #print(search_url[x])
-  fread(urlMAX[x], fill = TRUE)
+The next step would be to create the function which will grab each dataset, from the url using the base address, features and all districts.
+
+```{r}
+# how many rows
+nrow <- 2020-1884+1
+# Time Series function
+create.ts <- function(feature, district){ # pass 2 parameters 
+  c(address, feature, "/date/", district, ".txt") %>%  # set the url with several features adding 2 text fields
+    paste(collapse = "") %>%  # collapse the set urls above with no space
+    read.table(skip = 5, header = TRUE, nrows = nrow) %>%  # read the table, skip 5 rows, add first col as headers and nrows is 2020-1884+1
+    subset(select = 2:13) %>%  # only select Jan - Dec
+    t() %>% # transpose matrix
+    as.vector() %>% # save it as a vector 
+    ts(start = c(1884, 1),frequency = 12) # create a time-series object
 }
-
-getMEAN <- function(x) {
-  #print(search_url[x])
-  fread(urlMEAN[x], fill = TRUE)
-}
-
-getMIN <- function(x) {
-  #print(search_url[x])
-  fread(urlMIN[x], fill = TRUE)
-}
+# test the function
+create.ts("Tmax", "Northern_Ireland")
 ```
 
+Now that the function has been created and tested for Tmax Northern Ireland, lets move on to getting each feature.
 
 ```{r}
-## CLEAN
-globaltemps <- getMAX(1)
-# only take cols 2-13
-globaltemps <- globaltemps[,1:13]
-head(globaltemps)
-# remove rows 1-5
-globaltemps <- globaltemps[6:143]
-head(globaltemps)
+# TMAX
+Tmax.data <- 
+  lapply(districts, create.ts, feature = "Tmax") %>% 
+  set_names(districts)
+#TMEAN
+Tmean.data <- 
+  lapply(districts, create.ts, feature = "Tmean") %>% 
+  set_names(districts)
+#TMIN
+Tmin.data <- 
+  lapply(districts, create.ts, feature = "Tmin") %>% 
+  set_names(districts)
+# combine the list
+Data <- list("Tmax" = Tmax.data,
+               "Tmean" = Tmean.data,
+               "Tmin" = Tmin.data
+             )
+# select the Tmax from Northern_Ireland
+Data[["Tmax"]][["Northern_Ireland"]]
 ```
 
+This section has looked at getting all features (Tmax, Tmean, Tmin) and combined into list called Data. This has also been tested by selecting the Tmax and Northern Ireland again.
+
+The next steps will look to do some analsis of the datasets.
+
+
+# 2 - Task 2 – R programming (5%)
+Write an R script to identify the district and date (year and month) of the highest and the lowest max, min and mean temperature (six results in total).
+
+This section of the report will look to calculate the max, mean and min tempertures for each subset of data whilst pointing out the district and date.
 ```{r}
-# get the months from dataset
-months <- globaltemps[1,1:12]
-# check to make sure we got them
-head(months)
-# change to char
-months <- as.character(months)
-is.character(months)
+# 2 - Task 2
+# find the index
+maxIndex <- Data[['Tmax']] %>% 
+  unlist() %>% 
+  as.vector() %>% 
+  which.max() 
+
+# find sub position
+subIndex <- round((maxIndex/16440)*10) # 8 - could be months (August)
+
+# calculate months
+maxMonths <- month.abb[time(Data[["Tmax"]])]
+# calculate regions
+maxRegions <- names(Data[["Tmax"]])
+
+
+time(Data[['Tmax']])
 ```
 
 
+# 3 - Task 3 – Exploratory Data Analysis (25%)
+Carry out an EDA of the data you have downloaded. In order to complete your analysis,
+you may find it useful to answer (but not only!) the following questions:
+− Which district is the coldest/warmest? Describe used criteria.
+− Which district has the widest temperature range?
+− Are winters/summers getting colder/hotter?
 ```{r}
-# Now we have the months, lets delete them from the dataset
-globaltemps <- globaltemps[-1,1:12]
-# make sure it worked
-head(globaltemps)
-# now to set the names
-colnames(globaltemps) <- months
-# make sure it worked again
-head(globaltemps)
+
 ```
 
 
-```{r}
-# create a function that accepts as arguments a time series dataset
-# and the kind of model that we want to create (linear, quadratic, cubic,...)
-# and gives as output the model with given parameters
-create.model <- function(timeseries, degree) {
-  # degree vector
-  degree.vect = c(1,2,3)
-  # create a switch case
-  degree.value <- switch(degree,
-                         linear    = degree.vect[1],
-                         quadratic = degree.vect[2],
-                         cubic     = degree.vect[3])
-  # 
-  c(timeseries,
-    c("poly(time,",
-      as.character(degree.value),
-      ", raw = TRUE)") %>% paste(collapse = "")) %>%
-    paste(collapse = " ~ ") %>%
-    as.formula() %>%
-    lm() -> model
-  # return 
-  return(model %>% fitted())
-}
-```
-```{r}
-# run function against globaltemps
-globaltemps = ts(globaltemps)
+# 4 - Task 4
 
-globaltemps %>% create.model(1)
-```
-
-
-
-```{r}
-plot(globaltemps, type = 'l')
-lines(create.model("globaltemps", "linear"),    col = 'green',  lwd = 3)
-lines(create.model("globaltemps", "quadratic"), col = 'purple', lwd = 3)
-lines(create.model("globaltemps", "cubic"),     col = 'red',    lwd = 3)
-```
+# 5 - Task 5
 

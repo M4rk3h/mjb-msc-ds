@@ -1,8 +1,0 @@
-"0","myData <- getMAX(1)"
-"0",""
-"0","# save just the first row for the years"
-"0","myYears <- myData[7:143,1]"
-"0","colnames(myYears) <- 'Year'"
-"0","# start at 2 to remove the year"
-"0","myData <- myData[,2:13] "
-"0","head(myData)"

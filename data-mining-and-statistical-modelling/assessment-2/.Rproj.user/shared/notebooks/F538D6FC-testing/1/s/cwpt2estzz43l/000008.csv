@@ -1,4 +1,0 @@
-"0","# now to set the names"
-"0","colnames(globaltemps) <- months"
-"0","# make sure it worked again"
-"0","head(globaltemps)"
