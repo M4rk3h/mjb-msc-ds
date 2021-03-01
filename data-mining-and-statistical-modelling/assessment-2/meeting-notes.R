@@ -1,13 +1,12 @@
 # Notes with Filippo Meeting
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 library(magrittr)
 # set address
 address <- "https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/"
 # set features
 features <- c("Tmax", "Tmean", "Tmin")
 # create a list of districts
-districts <- list("Northern_Ireland",
+districts <- c("Northern_Ireland",
                   "Scotland_N",
                   "Scotland_E",
                   "Scotland_W",
@@ -32,13 +31,25 @@ create.ts <- function(feature, district){
 }
 # test the function
 create.ts("Tmax", "Northern_Ireland")
-# try to do this with lapply to get 10 Tmax
+# TMAX
 Tmax.data <- 
   lapply(districts, create.ts, feature = "Tmax") %>% 
   set_names(districts)
-
-
-# lists can be for nesting lists in lists etc.
+#TMEAN
+Tmean.data <- 
+  lapply(districts, create.ts, feature = "Tmean") %>% 
+  set_names(districts)
+#TMIN
+Tmin.data <- 
+  lapply(districts, create.ts, feature = "Tmin") %>% 
+  set_names(districts)
+# combine the list
+Data <- list("Tmax" = Tmax.data,
+               "Tmean" = Tmean.data,
+               "Tmin" = Tmin.data
+             )
+# select the Tmax from Northern_Ireland
+Data[["Tmax"]][["Northern_Ireland"]]
 
 # can nest lapply for a nested loop
 # lapply should be nested with the lists for districts.
