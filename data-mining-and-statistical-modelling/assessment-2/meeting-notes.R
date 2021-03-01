@@ -1,6 +1,7 @@
-# Notes with Filippo Meeting
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 1 - Task 1
 library(magrittr)
+library(tseries)
 # set address
 address <- "https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/"
 # set features
@@ -18,16 +19,15 @@ districts <- c("Northern_Ireland",
                   "England_SE_and_Central_S")
 # how many rows
 nrow <- 2020-1884+1
-
 # Time Series function
-create.ts <- function(feature, district){
-  c(address, feature, "/date/", district, ".txt") %>% 
-    paste(collapse = "") %>% 
-    read.table(skip = 5, header = TRUE, nrows = nrow) %>% 
-    subset(select = 2:13) %>% 
-    t() %>% 
-    as.vector() %>% 
-    ts(start = c(1884, 1),frequency = 12)
+create.ts <- function(feature, district){ # pass 2 parameters 
+  c(address, feature, "/date/", district, ".txt") %>%  # set the url with several features adding 2 text fields
+    paste(collapse = "") %>%  # collapse the set urls above with no space
+    read.table(skip = 5, header = TRUE, nrows = nrow) %>%  # read the table, skip 5 rows, add first col as headers and nrows is 2020-1884+1
+    subset(select = 2:13) %>%  # only select Jan - Dec
+    t() %>% # transpose matrix
+    as.vector() %>% # save it as a vector 
+    ts(start = c(1884, 1),frequency = 12) # create a time-series object
 }
 # test the function
 create.ts("Tmax", "Northern_Ireland")
@@ -51,12 +51,30 @@ Data <- list("Tmax" = Tmax.data,
 # select the Tmax from Northern_Ireland
 Data[["Tmax"]][["Northern_Ireland"]]
 
-# can nest lapply for a nested loop
-# lapply should be nested with the lists for districts.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 2 - Task 2
+# find max temp
 
-# data <- 3 lists
-# tmax, tmean, tmin
-# all lists will have 10 districts.
+maxTemp <- function(list, Data){
+  
+  
+  
+}
+
+# change the data into 
+
+Data[["Tmax"]] %>% # only select 
+  unlist() %>% # unlist it
+  as.vector() %>% 
+  which.max() 
+
+Data[["Tmax"]][]
+  
+Data %>% # get Data
+  unlist() %>% # unlist it
+  which.min()
+
+
 
 # functions for all the models
 # get the AIC reading for each one to see which is best.
