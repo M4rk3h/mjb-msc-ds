@@ -119,6 +119,12 @@ colRange(Data$Tmean)
 colRange(Data$Tmin)
 # Scotland_E has the lowest temp within the Tmin series
 
+# The above can also be done on the full dataset.
+maxTemps <- sapply(Data, colMax)
+minTemps <- sapply(Data, colMin)
+totRange <- sapply(Data, colRange)
+
+totRange %>% which.max()
 # plot monthly / quarterly to see the temps
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
