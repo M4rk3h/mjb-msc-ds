@@ -2,6 +2,8 @@
 # 1 - Task 1
 library(magrittr)
 library(tseries)
+# set seed 
+set.seed(17076749)
 # set address
 address <- "https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/"
 # set features
@@ -31,23 +33,14 @@ create.ts <- function(feature, district){ # pass 2 parameters
 }
 # test the function
 create.ts("Tmax", "Northern_Ireland")
-# TMAX
-Tmax.data <- 
-  lapply(districts, create.ts, feature = "Tmax") %>% 
-  set_names(districts)
-#TMEAN
-Tmean.data <- 
-  lapply(districts, create.ts, feature = "Tmean") %>% 
-  set_names(districts)
-#TMIN
-Tmin.data <- 
-  lapply(districts, create.ts, feature = "Tmin") %>% 
-  set_names(districts)
-# combine the list
-Data <- list("Tmax" = Tmax.data,
-               "Tmean" = Tmean.data,
-               "Tmin" = Tmin.data
-             )
+# function to get all districts & features 
+readFeatures <- function(feature){
+  lapply(districts, create.ts, feature = feature) %>% 
+    set_names(districts)
+}
+# get them all together.
+Data <- lapply(features, readFeatures) %>% set_names(features)
+
 # select the Tmax from Northern_Ireland
 Data$Tmax$Northern_Ireland
 
@@ -98,10 +91,84 @@ tmax_unl <- Data$Tmax %>%
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 3 - Task 3
+# EDA
 
+# find max value
+colMax <- function(data) sapply(data, max, na.rm = TRUE)
+colMax(Data$Tmax) %>% which.max()
+# East_Anglia has the highest temp within the Tmax series.
+colMax(Data$Tmean) %>% which.max()
+# East_Anglia has the highest temp within the Tmean series.
+colMax(Data$Tmin) %>% which.max()
+# England_SE_and_Central_S has the highest temp within Tmin.
+
+# find lowest value
+colMin <- function(data) sapply(data, min, na.rm = TRUE)
+colMin(Data$Tmax) %>% which.min()
+# Midlands has the lowest temp within the Tmax series.
+colMin(Data$Tmean) %>% which.min()
+# Scotland_E has the lowest temp within the Tmean series.
+colMin(Data$Tmin) %>% which.min()
+# Scotland_E has the lowest temp within the Tmin series
+
+colRange <- function(data) sapply(data, range, na.rm = TRUE)
+colRange(Data$Tmax)
+# East_Anglia    has the lowest temp within the Tmax series.
+colRange(Data$Tmean)
+# East_Anglia has the lowest temp within the Tmean series.
+colRange(Data$Tmin)
+# Scotland_E has the lowest temp within the Tmin series
+
+# plot monthly / quarterly to see the temps
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 4 - Task 4
+time.set <- 1:length(Data$Tmax$England_SW_and_S_Wales)
+# double check it.
+length(time.set)
+# create a linear fit of the dataset with the time.
+linear.fit <- lm(Data$Tmax$England_SW_and_S_Wales ~ time.set)
+summary(linear.fit) # 
+
+print(6.391e-04 * 12)
+# over past 137 years, the avg max temp has increased by 0.007
+
+# rescale the time vector
+time <- 1:length(Data$Tmax$England_SW_and_S_Wales)
+time <- (time - min(time)) / (max(time) -1)
+# try again with rescaled
+linear.fit <- lm(Data$Tmax$England_SW_and_S_Wales ~ time)
+summary(linear.fit) # 
+print(1.0500 * 12)
+# the plot has some seasonality - but difficult to notice a trend for total dataset.
+
+ts.plot(Data$Tmax$England_SW_and_S_Wales, ylab = "Temperature")
+linear.fit %>% fitted() %>% ts(start = 1884, frequency = 12) -> linear.fitted
+lines(linear.fitted, col = "green", lwd = 2)
+abline(mean(Data$Tmax$England_SW_and_S_Wales), 0, col = "blue", lwd = 2)
+# the linear trend is ever so slightly increasing which was discovered above
+# with the summary of linear.fit.
+
+# lets look at the last 10 years
+ts.plot(Data$Tmax$England_SW_and_S_Wales[1524:1644], 
+        ylab = "Temperature")
+lines(linear.fitted[1524:1644], 
+      col = "green", 
+      lwd = 2)
+abline(mean(Data$Tmax$England_SW_and_S_Wales[1524:1644]), 
+       0, 
+       col = "blue", 
+       lwd = 2)
+
+tempMaxOneSlice <- Data$Tmax$England_SW_and_S_Wales[1:120] %>% 
+  plot(type = 'l',
+       ylab = 'Max Temps - SW England / S Wales')
+mean(Data$Tmax$England_SW_and_S_Wales[1:120]) # 12.46
+# last 10 years recorded
+tempMaxOneSlice2 <- Data$Tmax$England_SW_and_S_Wales[1524:1644] %>% 
+  plot(type = 'l',
+       ylab = 'Max Temps - SW England / S Wales')
+mean(Data$Tmax$England_SW_and_S_Wales[1524:1644]) # 13.82
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 5 - Task 5
