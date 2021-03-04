@@ -134,6 +134,8 @@ mean(as.numeric(Data$Tmax))
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 4 - Task 4
 
+
+
 time.set <- 1:length(Data$Tmax$England_SW_and_S_Wales - 1)
 # double check it.
 length(time.set)
