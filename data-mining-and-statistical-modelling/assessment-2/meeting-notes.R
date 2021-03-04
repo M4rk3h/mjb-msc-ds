@@ -69,11 +69,6 @@ subIndex <- round((maxIndex/16440)*10) # 8 - This could be district
 # calculate regions
 # maxRegions <- names(Data$Tmax)
 
-dTmax <- Data$Tmax %>%
-  unlist() %>% 
-  as.vector() %>% 
-  which.max()
-
 # GETS MONTH
 unlistedTMAX <- Data$Tmax %>% unlist()
 myMm <- month.abb[(time(unlistedTMAX)[which.min(unlistedTMAX)] %% 1)*12+1]
@@ -113,25 +108,38 @@ colMin(Data$Tmin) %>% which.min()
 
 colRange <- function(data) sapply(data, range, na.rm = TRUE)
 colRange(Data$Tmax)
-# East_Anglia    has the lowest temp within the Tmax series.
+
 colRange(Data$Tmean)
-# East_Anglia has the lowest temp within the Tmean series.
+
 colRange(Data$Tmin)
-# Scotland_E has the lowest temp within the Tmin series
+
 
 # The above can also be done on the full dataset.
 maxTemps <- sapply(Data, colMax)
+# print
+maxTemps
 minTemps <- sapply(Data, colMin)
+# print
+minTemps
 totRange <- sapply(Data, colRange)
+# print
+totRange
 
-totRange %>% which.max()
-# plot monthly / quarterly to see the temps
+colAvg <- function(data) sapply(data, mean)
+sapply(Data, colAvg)
 
+sapply(Data, mean)
+
+mean(as.numeric(Data$Tmax))
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 4 - Task 4
-time.set <- 1:length(Data$Tmax$England_SW_and_S_Wales)
+
+time.set <- 1:length(Data$Tmax$England_SW_and_S_Wales - 1)
 # double check it.
 length(time.set)
+slicedDF <- Data$Tmax$England_SW_and_S_Wales - 1
+
+
 # create a linear fit of the dataset with the time.
 linear.fit <- lm(Data$Tmax$England_SW_and_S_Wales ~ time.set)
 summary(linear.fit) # 
@@ -165,16 +173,19 @@ abline(mean(Data$Tmax$England_SW_and_S_Wales[1524:1644]),
        0, 
        col = "blue", 
        lwd = 2)
+# now the first 10 years
+ts.plot(Data$Tmax$England_SW_and_S_Wales[1:120], 
+        ylab = "Temperature")
+lines(linear.fitted[1:120], 
+      col = "green", 
+      lwd = 2)
+abline(mean(Data$Tmax$England_SW_and_S_Wales[1:120]), 
+       0, 
+       col = "blue", 
+       lwd = 2)
 
-tempMaxOneSlice <- Data$Tmax$England_SW_and_S_Wales[1:120] %>% 
-  plot(type = 'l',
-       ylab = 'Max Temps - SW England / S Wales')
-mean(Data$Tmax$England_SW_and_S_Wales[1:120]) # 12.46
-# last 10 years recorded
-tempMaxOneSlice2 <- Data$Tmax$England_SW_and_S_Wales[1524:1644] %>% 
-  plot(type = 'l',
-       ylab = 'Max Temps - SW England / S Wales')
-mean(Data$Tmax$England_SW_and_S_Wales[1524:1644]) # 13.82
+
+
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 5 - Task 5
