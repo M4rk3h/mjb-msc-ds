@@ -1,0 +1,15 @@
+
+
+start-all.sh & stop-all.sh : Used to start and stop hadoop daemons all at once. Issuing it on the master machine will start/stop the daemons on all the nodes of a cluster. Deprecated as you have already noticed.
+
+start-dfs.sh, stop-dfs.sh and start-yarn.sh, stop-yarn.sh : Same as above but start/stop HDFS and YARN daemons separately on all the nodes from the master machine. It is advisable to use these commands now over start-all.sh & stop-all.sh
+
+hadoop-daemon.sh namenode/datanode and yarn-deamon.sh resourcemanager : To start individual daemons on an individual machine manually. You need to go to a particular node and issue these commands.
+
+Use case : Suppose you have added a new DN to your cluster and you need to start the DN daemon only on this machine,
+
+bin/hadoop-daemon.sh start datanode
+
+Note : You should have ssh enabled if you want to start all the daemons on all the nodes from one machine.
+
+Hope this answers your query.
