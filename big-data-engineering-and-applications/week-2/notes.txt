@@ -77,3 +77,11 @@ ssh-copy-id mark@bdea-master
 
 # after configuring the 4 files on masters, copy to worker node
 scp $CONF/* mark@bdea-worker:/usr/local/hadoop/etc/hadoop
+
+# add more extries to bdea-master .bashrc
+# HADOOP MAPPING
+export HADOOP_HOME=/home/ubuntu/hadoop
+export HADOOP_COMMON_HOME=$HADOOP_HOME/etc/hadoop
+export HADOOP_CONF_DIR=HADOOP_HOME/etc/hadoop
+export HADOOP_HDFS_HOME=$HADOOP_HOME
+export HADOOP_MAPPED_HOME=$HADOOP_HOME
