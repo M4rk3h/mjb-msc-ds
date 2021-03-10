@@ -3,7 +3,7 @@ library(magrittr)
 library(TSA)
 
 # Example 1
-globaltemps <- "data/globaltemps.txt" %>%
+globaltemps <- "../week-5/data/globaltemps.txt" %>%
   read.table() #%>% ts(start = 1856)
 
 globaltemps <- as.vector(t(globaltemps))
@@ -22,8 +22,7 @@ plot(NULL,
 )
 
 globaltemps %>% lines()
-
-# plot an horizontal line
+# plot a horizontal line
 # b_t = beta_0 + beta_1 * t
 # beta_0 = mean temp
 # beta_1 = 0 (horizontal)
@@ -34,7 +33,7 @@ abline(mean(globaltemps), # intercept
 
 # estimate linear trend
 # m_t = beta_0 + beta_1 * t
-# our tast is to estimate beta_0 and beta_1
+# our test is to estimate beta_0 and beta_1
 time <- 1:length(globaltemps)
 
 c("globaltemps","poly(time, 1, raw = T)") %>%
@@ -182,17 +181,6 @@ cubic.model.milk[1] +
 
 # Example 2 (loading dataset milk)
 
-
-
-
-
-# a trick for programming in R
-name <- "italian"
-switch(name, 
-       italian = "filippo",
-       english = "Philip",
-       spanish = "Filipe"
-       )
 
 # create a function that accepts as arguments ts.data
 # and the kind of model that we want to create
