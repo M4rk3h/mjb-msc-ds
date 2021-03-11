@@ -1,32 +1,26 @@
 # load packages ----
 library(magrittr)
 library(TSA)
-
 # load data ----
 data(milk)
-
 # plot the data ----
 plot(milk)
-
 # classical additive model Y_t = m_t + s_t + X_t
 # m_t = trend component
 # s_t seasonal component
 # X_t stationary ('Random') component
 time <- milk %>% time() %>% as.vector()
 time %>% head()
-
 # create the models ----
 linear <- lm(milk ~ poly(time, degree = 1, raw = T))
 quadratic <- lm(milk ~ poly(time, degree = 2, raw = T))
-# cubic <- lm(milk ~ poly(time, degree = 3, raw = T))
-
+cubic <- lm(milk ~ poly(time, degree = 3, raw = T))
 # plot everything ----
 plot(milk,
      main = 'Milk Production',
      xlab = 'Year',
      ylab = 'Amount produced',
      type = 'l')
-
 # add them as lines for the plot ----
 # linear
 lines(time, 
@@ -41,12 +35,11 @@ lines(time,
       type = 'l',
       col = 'green')
 # cubic
-#lines(time, 
-#      fitted(cubic),
-#      lwd = 2,
-#      type = 'l',
-#      col = 'red')
-
+lines(time, 
+      fitted(cubic),
+      lwd = 2,
+      type = 'l',
+      col = 'red')
 # check the difference between quad and cubic ----
 # print((fitted(quadratic) - fitted(cubic)) %>% abs() %>% max())
 # summary(quadratic)
@@ -57,11 +50,11 @@ lines(time,
 # lower is better.
 AIC(linear)
 AIC(quadratic)
+AIC(cubic)
 
 # residuals ----
 milk.notrend <- milk - fitted(linear)
 # seasonal means ----
-
 tapply(milk.notrend, cycle(milk.notrend), mean)
 
 # create months variable as factor

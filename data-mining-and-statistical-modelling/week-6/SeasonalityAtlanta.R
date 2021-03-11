@@ -474,10 +474,8 @@ seasonal.har <- function(order){
 
 # order 1
 seas.har1 <- seasonal.har(1)
-
 # order 2
 seas.har2 <- seasonal.har(2)
-
 # order 3
 seas.har3 <- seasonal.har(3) # SIN.3 not significant
 

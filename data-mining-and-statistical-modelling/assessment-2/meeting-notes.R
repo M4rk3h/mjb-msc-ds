@@ -134,8 +134,18 @@ sapply(Data, colAvg)
 # For each district, consider the 3 time series: max, mean, min.
 # Subset each of the 30 time series until December 2019.
 
-data <- data.frame(title1 = Data$Tmax$Northern_Ireland,
-                   title2 = Data$Tmax$Scotland_N)
+## NONE OF THIS WORKS
+# Time Series function
+convert.ts <- function(data, feature, district){ # pass 3 parameters 
+  c(data, feature, districts) %>%  
+    paste(collapse = "$") # add $ between each parameter
+}
+
+matrix.ts <- function(feature){
+  lapply(data, convert.ts, feature = feature, district = districts)
+}
+
+tsMatrix <- matrix.ts(Data)
 
 matCon <- function(data){
   data %>% 
@@ -144,77 +154,78 @@ matCon <- function(data){
 }
 testTS <- lapply(Data, matCon)
 is.vector(testTS)
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# first convert all ts data to matrix
-slice.ts <- function(timeseries){
-  data %>% # get the timeseries data
-    window(start = c(1884,12), 
-         end = c(2019,12), 
-         frequency = 12
-         ) # and cut off everything > 2019
+# function to slice dataset
+slice.ts <- function(data){
+  data %>% window(start = c(1884,12), 
+           end = c(2019,12), 
+           frequency = 12,
+           extend = FALSE)
 }
-# doesn't work
-slice.ts(testTS)
-
-
-# sliced window on 1 dataset
+# use fun for each dataset.
 slicedWindow <- 
-  Data$Tmax$England_NW_and_N_Wales %>% 
-  window(start = c(1884,12), 
-         end = c(2019,12), 
-         frequency = 12,
-         extend = FALSE)
-# 
-slicedWindow
+  slice.ts(Data$Tmax$England_SE_and_Central_S)
+
 # 4.1 - Estimate Trend
 # Estimate the trend of each time series using linear, quadratic and cubic 
 # regression. Compare your results and use appropriate plots and/or tables 
 # to confirm your observations.
 
-# create time vector
-time <- 1:length(slicedWindow)
-time <- (time - min(time))/(max(time) - 1)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# linear trend
-linear.fit <- lm(slicedWindow ~ time)
+# create time vector
+# create a time vector
+time <- 1:length(slicedWindow)
+# re-scale from 0 - 1
+time <- (time - min(time))/(max(time) - 1)
+# function for linear model
+linear.fun <- function(timeseries){
+  # create linear trend
+  linear.fit <<- lm(timeseries ~ time) # use <<- for global variables
+    # create linear fitted
+  linear.fit %>% fitted() %>% ts(start = c(1884,12), end = c(2019,12), frequency = 12) ->> linear.fitted
+}
+# run linear fun
+linear.fun(slicedWindow)
 # check summary
 summary(linear.fit)
-
 # Now try to plot
-# create ts plot with the data
 ts.plot(slicedWindow, ylab = "Temperature")
-# create linear fitted
-linear.fit %>% fitted() %>% ts(start = c(1884,12), end = c(2019,12), frequency = 12) -> linear.fitted
 # add linear fitted lines
 lines(linear.fitted, col = "green", lwd = 2)
 # add mean line
 abline(mean(slicedWindow), 0, col = "blue", lwd = 2)
-
-# check last 10 years
-ts.plot(slicedWindow[1501:1621], ylab = "Temperature")
-lines(linear.fitted[1501:1621], col = "green", lwd = 2)
-abline(mean(slicedWindow[1501:1621]), 0, col = "blue", lwd = 2)
 # temp is very slowly increasing.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# quadratic trend
 # square the time
-time2 <- time^2
-
-# create quadratic fit model
-quadratic.fit <- lm(slicedWindow ~ time + time2) ## HERE 2-trend-video.R in week 5
+time2 <- (time^2)
+# quadratic trend
+quadratic.fun <- function(timeseries){
+  # create quadratic fit model
+  quadratic.fit <<- lm(timeseries ~ time + time2)
+  # create quadratic fitted
+  quadratic.fit %>% fitted() %>% ts(start = c(1884,12), end = c(2019,12), frequency = 12) ->>
+    quadratic.fitted
+}
+# run quad function
+quadratic.fun(slicedWindow)
 # check summary
 summary(quadratic.fit)
-# create linear fitted
-quadratic.fit %>% fitted() %>% ts(start = c(1884,12), end = c(2019,12), frequency = 12) -> quadratic.fitted
 # add linear fitted lines
 lines(quadratic.fitted, col = "green", lwd = 2)
-# add mean line
-abline(mean(slicedWindow), 0, col = "blue", lwd = 2)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # cube time
 time3 <- time^3
-# create cubic fit model
-cubic.fit <- lm(slicedWindow ~ time + time2 + time3)
+# cubic function
+cube.fun <- function(timeseries){
+  # create cubic fit model
+  cubic.fit <<- lm(timeseries ~ time + time2 + time3)
+  # create cubic fitted
+  cubic.fit %>% fitted() %>% ts(start = c(1884,12), end = c(2019,12), frequency = 12) ->> 
+    quadratic.fitted
+}
+# run cubic function
+cube.fun(slicedWindow)
 # check summary
 summary(cubic.fit)
 # add cubic line
@@ -222,16 +233,18 @@ lines(time,
       cubic.fit %>% fitted(),
       col = 'yellow',
       lwd = 3)
-
+# check fit
 AIC(linear.fit) 
 AIC(quadratic.fit)
 AIC(cubic.fit)
+
 # 4.2 - Select Trend
 # Select a trend model for each time series using an appropriate criteria. 
 # Are the models selected all the same? If not is there a pattern depending on 
 # the region and/or the group (max, mean and min)?
 
-# Linear has the lowest AIC for most ts.
+# All datasets had a lower AIC result for linear fit,
+# except for TMAX-England_SE_and_Central_S
 
 
 # 4.3 - Estimate Seasonality
@@ -239,91 +252,93 @@ AIC(cubic.fit)
 # use the output to estimate the seasonality of each time series employing averaging and sine-cosine models. 
 # Compare your results and use appropriate plots and/or tables to confirm your observations.
 
-# start with 1 dataset and remove the trend
-sliced.window.notrend <- 
-  (slicedWindow - fitted(linear.fit))
-# get seasonal means
-tapply(sliced.window.notrend, cycle(sliced.window.notrend), mean)
-# create months variable as factor
-months <- sliced.window.notrend %>% cycle() %>% as.factor()
-# seasonal means
-sliced.seas <- lm(sliced.window.notrend ~ months - 1)
-# check summary for seasonal means coefficients
-summary(sliced.seas)
-
-# evaluate harmonic seasonality
-# create an empty matrix
-SIN <- COS <-  matrix(nrow = length(time), ncol = 6)# 6 = freq/2
-
-for(i in 1:6){
-  SIN[,i] <- sin(2*pi*i*time)
-  COS[,i] <- cos(2*pi*i*time)
+get.seasonality <- function(timeseries){
+  # get the residuals
+  sw.notrend <<- (timeseries - fitted(linear.fit))
+  # get seasonal means
+  tapply(sw.notrend, cycle(sw.notrend), mean)
+  # create months variable as factor
+  months <<- sw.notrend %>% cycle() %>% as.factor()
+  # seasonal means
+  sliced.seas <<- lm(sw.notrend ~ months - 1)
+    # evaluate harmonic seasonality
+  # create an empty matrix
+  SIN <<- COS <<-  matrix(nrow = length(time), ncol = 6)# 6 = freq/2
+  # loop through
+  for(i in 1:6){
+    SIN[,i] <- sin(2*pi*i*time)
+    COS[,i] <- cos(2*pi*i*time)
+  }
+  # model all season harmonic
+  # model notrend against all values with -1
+  slice.har1 <<- lm(sw.notrend ~ . -1 ,
+                   data.frame(SIN = SIN[,1], COS = COS[,1]))
+  # slice 2
+  slice.har2 <<- lm(sw.notrend ~ . -1 ,
+                   data.frame(SIN = SIN[,1:2], COS = COS[,1:2]))
+  # slice 3
+  slice.har3 <<- lm(sw.notrend ~ . -1 ,
+                    data.frame(SIN = SIN[,1:3], COS = COS[,1:3]))
+  # slice 4
+  slice.har4 <<- lm(sw.notrend ~ . -1 ,
+                    data.frame(SIN = SIN[,1:4], COS = COS[,1:4]))
+  # slice 5
+  slice.har5 <<- lm(sw.notrend ~ . -1 ,
+                    data.frame(SIN = SIN[,1:5], COS = COS[,1:5]))
+  # slice 6
+  slice.har6 <<- lm(sw.notrend ~ . -1 ,
+                    data.frame(SIN = SIN[,1:6], COS = COS[,1:6]))
 }
+# run seasonality fun
+get.seasonality(slicedWindow)
 
-# model all season harmonic
-# model notrend against all values with -1
-slice.har1 <- lm(sliced.window.notrend ~ . -1 ,
-                data.frame(SIN = SIN[,1], COS = COS[,1]))
-# check summary
+getAIC <- data.frame(
+  slice.har.1 = AIC(slice.har1),
+  slice.har.2 = AIC(slice.har2),
+  slice.har.3 = AIC(slice.har3),
+  slice.har.4 = AIC(slice.har4),
+  slice.har.5 = AIC(slice.har5),
+  slice.har.6 = AIC(slice.har6)
+)
+# print with knitr table
+kable(getAIC, caption = "AIC's for all harmonic seasonalities")
+# sort decreasing
+getAIC %>% sort(decreasing = F)
+
 summary(slice.har1)
-# create 2
-slice.har2 <- lm(sliced.window.notrend ~ . -1 ,
-                data.frame(SIN = SIN[,1:2], COS = COS[,1]))
-# check summary
 summary(slice.har2)
-slice.final <- lm(slicedWindow ~ .,
-                 data.frame(TIME = poly(time, degree = 1, raw = T),
-                            SIN = SIN[,1:2], 
-                            COS = COS[,1]))
-# check summary
-summary(slice.final)
+summary(slice.har3)
+summary(slice.har4)
+summary(slice.har5)
+summary(slice.har6)
 
-plot(slicedWindow,
-     main = 'AVG TEMP NW England & N Wales',
-     xlab = 'Year',
-     ylab = 'AVG TEMP',
-     type = 'l')
-lines(time, 
-      fitted(slice.har2),
-      lwd = 3,
-      type = 'l',
-      col = 'blue')
-
-# function for seasonality
-seasonal.har <- function(order){
-  assign(paste(c("seasonal.har",order), collapse = ""),
-         lm(sliced.window.notrend ~ . - 1,
-            data.frame(SIN = SIN[,1:order], COS = COS[,1:order])))
-  
-  plot(sliced.window.notrend,
-       main = paste("Avg Temp without trend and harmonic", order),
-       lwd = 2,
-       type = "l")
-  
-  lines(time,
-        fitted(get(paste(c("seasonal.har",order), collapse = ""))),
-        lwd = 3,
-        col = 'green',
-        lty = 1)
-  
-  print(summary(get(paste(c("seasonal.har",order), collapse = ""))))
-  
-  return(get(paste(c("seasonal.har",order), collapse = "")))
-}
-
-seas.har1 <- seasonal.har(1)
-seas.har1 <- seasonal.har(2)
-seas.har1 <- seasonal.har(3)
-
+# removed as it doesnt work.
+# plot(slicedWindow,
+#      main = "AVG TEMPS IN UK",
+#      xlab = "Year",
+#      ylab = "AVG TEMP",
+#      type = "l")
+# lines doesnt work for some reason.
+# lines(time, 
+#       fitted(slice.har2),
+#       lwd = 3,
+#       type = "l",
+#       col = "blue")
+ 
 
 
 # 4.4 - Select Seasonality
-# Select a seasonal model for each time series using an appropriate criteria. 
-# Are the models selected all the same? If not is there a pattern depending on the region and/or the group (max, min and mean)?
+# Select a seasonal model for each time series using an appropriate criteria.
+# Are the models selected all the same? 
+# If not is there a pattern depending on the region and/or the group (max, min and mean)?
+
 
 # 4.5 - Estimate Seasonality
 # Estimate a combined model for trend and seasonality using the results of the previous steps.
 # Call this model “final”.
+
+
+
 
 # 4.6 - Estimate Seasonality
 # Estimate trend and seasonality using a combined quadratic and sin-cosine (of order 2) models.
@@ -353,39 +368,3 @@ seas.har1 <- seasonal.har(3)
 
 # problem could be seasionalities with p values (<0.01)
 
-# num to month
-numyear2monthyear <- function(x){   
-  c(trunc(x),                   # entire part = year
-    round((x-floor(x))*12 + 1)) # decimal part * 12 + 1 (Jan=0) = Month
-}
-
-# try test function on Data$Tmax
-numyear2monthyear(Data$Tmax$Northern_Ireland)
-numyear2monthyear(tmax_unl)
-
-# try it with lapply
-lapply(Data$Tmax, numyear2monthyear)
-
-# yeet
-extrema_dates <- function(ts){
-  ts_min_date <- numyear2monthyear(time(ts)[which.min(ts)])
-  ts_max_date <- numyear2monthyear(time(ts)[which.max(ts)])
-  list(min=min(ts),
-       min_year=ts_min_date[1],
-       min_month=ts_min_date[2],
-       max=max(ts),
-       max_year=ts_max_date[1],
-       max_month=ts_max_date[2])
-}
-
-extrema_dates(Data$Tmax$Northern_Ireland)
-extrema_dates(tmax_unl)
-# try to use the 2 above functions
-sapply(Data$Tmax, extrema_dates)
-
-
-#which.max(Data$Tmax)
-
-numyear2monthyear(time(data)[which.max(data)])
-
-numyear2monthyear(time(data)[which.min(data)])

@@ -3,7 +3,7 @@
     "path": "~/GitHub/mjb-msc-ds/data-mining-and-statistical-modelling/assessment-2/meeting-notes.R",
     "project_path": "meeting-notes.R",
     "type": "r_source",
-    "hash": "3368539298",
+    "hash": "2149947445",
     "contents": "",
     "dirty": false,
     "created": 1615371201402.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "136,0",
-        "scrollLine": "125"
+        "cursorPosition": "370,0",
+        "scrollLine": "339"
     },
     "folds": "",
-    "lastKnownWriteTime": 1615386834,
+    "lastKnownWriteTime": 1615462026,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1615386834709,
+    "last_content_update": 1615462026772,
     "read_only": false,
     "read_only_alternatives": []
 }

@@ -1,0 +1,934 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={MS4S09 Coursework 2 - 2020/21},
+  pdfauthor={Mark Baber},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\title{MS4S09 Coursework 2 - 2020/21}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{17076749}
+\author{Mark Baber}
+\date{xx/xx/2021}
+
+\begin{document}
+\maketitle
+
+This report will look at using data mining techniques on a time series
+dataset. This report will be broken down into several parts, from
+getting the data, exploring the data, looking into trend and seasonality
+of the data before continuing onto a more indepth analysis. This indepth
+analysis will cover ARMA and forecasting.
+
+All of this will be done using R and Rstudio, with the use of limited
+packages which has been added below: - magrittr - tseries - knitr
+
+\hypertarget{task-1-getting-the-data-10}{%
+\section{1 Task 1 -- Getting the data
+(10\%)}\label{task-1-getting-the-data-10}}
+
+Write an R script that downloads the data directly from the website for
+the 30 time series (3 time series for each of the 10 districts) using
+the ``Year ordered statistics'' option, and selecting the districts
+listed. Download up to December 2021.
+
+Create the 30 time-series objects in R to store the data you have
+downloaded. Remember to specify the appropriate starting point and
+frequency.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# set address}
+\NormalTok{address }\OtherTok{\textless{}{-}} \StringTok{"https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/"}
+\CommentTok{\# set features}
+\NormalTok{features }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Tmax"}\NormalTok{, }\StringTok{"Tmean"}\NormalTok{, }\StringTok{"Tmin"}\NormalTok{)}
+\CommentTok{\# create a list of districts}
+\NormalTok{districts }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Northern\_Ireland"}\NormalTok{,}
+                  \StringTok{"Scotland\_N"}\NormalTok{,}
+                  \StringTok{"Scotland\_E"}\NormalTok{,}
+                  \StringTok{"Scotland\_W"}\NormalTok{,}
+                  \StringTok{"England\_E\_and\_NE"}\NormalTok{,}
+                  \StringTok{"England\_NW\_and\_N\_Wales"}\NormalTok{,}
+                  \StringTok{"Midlands"}\NormalTok{,}
+                  \StringTok{"East\_Anglia"}\NormalTok{,}
+                  \StringTok{"England\_SW\_and\_S\_Wales"}\NormalTok{,}
+                  \StringTok{"England\_SE\_and\_Central\_S"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The section above looked to set up the base url for the datasets, the 3
+different features which changed within the url and the 10 districts
+which will be needed for the url. Before going further into creating a
+function, there was some pre-analysis on the scraped dataset to
+calculate the number of rows and looked into which rows \& columns
+should be omitted.
+
+The next step would be to create the function which will grab each
+dataset, from the url using the base address, features and all
+districts.
+
+Now that the function has managed to get all datasets for each feature
+(TMAX-TMEAN-TMIN) lets move on to the next step which will be to explore
+these datasets.
+
+\hypertarget{task-2-r-programming-5}{%
+\section{2 - Task 2 -- R programming
+(5\%)}\label{task-2-r-programming-5}}
+
+Write an R script to identify the district and date (year and month) of
+the highest and the lowest max, min and mean temperature (six results in
+total).
+
+This section of the report will look to calculate the max, mean and min
+tempertures for each subset of data whilst pointing out the district and
+date.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 2 {-} Task 2}
+\CommentTok{\# find the max value\textquotesingle{}s index}
+\NormalTok{maxIndex }\OtherTok{\textless{}{-}}\NormalTok{ Data}\SpecialCharTok{$}\NormalTok{Tmax }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unlist}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.vector}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{which.max}\NormalTok{() }
+
+\CommentTok{\# find sub position}
+\NormalTok{subIndex }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{((maxIndex}\SpecialCharTok{/}\DecValTok{16440}\NormalTok{)}\SpecialCharTok{*}\DecValTok{10}\NormalTok{) }\CommentTok{\# 8 {-} This could be district}
+
+\CommentTok{\# find max value}
+\CommentTok{\# maxVal \textless{}{-} DTmUn \%\textgreater{}\% which.max()}
+
+\CommentTok{\# find year}
+\CommentTok{\# maxYear \textless{}{-} floor(time(DTmUn))[which.max(DTmUn)]}
+
+\CommentTok{\# month}
+\CommentTok{\# maxMonth \textless{}{-} month.abb[(time(Data$Tmax)[which.max(Data$Tmax)] \%\textgreater{}\% 1)*12+1]}
+
+\CommentTok{\# calculate regions}
+\CommentTok{\# maxRegions \textless{}{-} names(Data$Tmax)}
+
+\CommentTok{\# GETS MONTH}
+\NormalTok{unlistedTMAX }\OtherTok{\textless{}{-}}\NormalTok{ Data}\SpecialCharTok{$}\NormalTok{Tmax }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{unlist}\NormalTok{()}
+\NormalTok{myMm }\OtherTok{\textless{}{-}}\NormalTok{ month.abb[(}\FunctionTok{time}\NormalTok{(unlistedTMAX)[}\FunctionTok{which.min}\NormalTok{(unlistedTMAX)] }\SpecialCharTok{\%\%} \DecValTok{1}\NormalTok{)}\SpecialCharTok{*}\DecValTok{12}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]}
+\CommentTok{\# plot(Data$Tmax$Northern\_Ireland, type = \textquotesingle{}l\textquotesingle{})}
+
+\CommentTok{\# get max temp of Tmax}
+\FunctionTok{sapply}\NormalTok{(Data}\SpecialCharTok{$}\NormalTok{Tmax, which.max)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         Northern_Ireland               Scotland_N               Scotland_E 
+##                     1340                      764                     1471 
+##               Scotland_W         England_E_and_NE   England_NW_and_N_Wales 
+##                      764                     1471                     1471 
+##                 Midlands              East_Anglia   England_SW_and_S_Wales 
+##                     1471                     1471                     1340 
+## England_SE_and_Central_S 
+##                     1471
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# data\_min\_value\_time \textless{}{-} time(Data)[which.min(Data)]}
+
+\CommentTok{\# unlist tMAX}
+\NormalTok{tmax\_unl }\OtherTok{\textless{}{-}}\NormalTok{ Data}\SpecialCharTok{$}\NormalTok{Tmax }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unlist}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.vector}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+For task 2, I wasn't able to figure this out so this section will be
+left out.
+
+\hypertarget{task-3-exploratory-data-analysis-25}{%
+\section{3 - Task 3 -- Exploratory Data Analysis
+(25\%)}\label{task-3-exploratory-data-analysis-25}}
+
+Carry out an EDA of the data you have downloaded. In order to complete
+your analysis, you may find it useful to answer (but not only!) the
+following questions:
+
+− Which district is the coldest/warmest? Describe used criteria. − Which
+district has the widest temperature range? − Are winters/summers getting
+colder/hotter?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# find max value}
+\NormalTok{colMax }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data) }\FunctionTok{sapply}\NormalTok{(data, max, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{colMax}\NormalTok{(Data}\SpecialCharTok{$}\NormalTok{Tmax) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{which.max}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## East_Anglia 
+##           8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# East\_Anglia has the highest temp within the Tmax series.}
+\FunctionTok{colMax}\NormalTok{(Data}\SpecialCharTok{$}\NormalTok{Tmean) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{which.max}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## East_Anglia 
+##           8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# East\_Anglia has the highest temp within the Tmean series.}
+\FunctionTok{colMax}\NormalTok{(Data}\SpecialCharTok{$}\NormalTok{Tmin) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{which.max}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## England_SE_and_Central_S 
+##                       10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# England\_SE\_and\_Central\_S has the highest temp within Tmin.}
+\end{Highlighting}
+\end{Shaded}
+
+Above I have looked at the max temperatures whilst also finding the max
+of those with which.max. Now lets create a function to find the lowest
+temperatures.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# find lowest value}
+\NormalTok{colMin }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data) }\FunctionTok{sapply}\NormalTok{(data, min, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{colMin}\NormalTok{(Data}\SpecialCharTok{$}\NormalTok{Tmax) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{which.min}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Midlands 
+##        7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Midlands has the lowest temp within the Tmax series.}
+\FunctionTok{colMin}\NormalTok{(Data}\SpecialCharTok{$}\NormalTok{Tmean) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{which.min}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Scotland_E 
+##          3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Scotland\_E has the lowest temp within the Tmean series.}
+\FunctionTok{colMin}\NormalTok{(Data}\SpecialCharTok{$}\NormalTok{Tmin) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{which.min}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Scotland_E 
+##          3
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Scotland\_E has the lowest temp within the Tmin series}
+\end{Highlighting}
+\end{Shaded}
+
+This section looked at the lowest temperatures within the dataset, with
+Midlands having the lowest temp within Tmax, Scotland\_E having the
+lowest within Tmean and again Scotland\_E having the lowest for Tmin.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{colRange }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data) }\FunctionTok{sapply}\NormalTok{(data, range, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\FunctionTok{colRange}\NormalTok{(Data}\SpecialCharTok{$}\NormalTok{Tmax)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Northern_Ireland Scotland_N Scotland_E Scotland_W England_E_and_NE
+## [1,]              1.5        0.4       -0.5        0.6             -0.1
+## [2,]             22.1       20.1       21.4       21.6             24.4
+##      England_NW_and_N_Wales Midlands East_Anglia England_SW_and_S_Wales
+## [1,]                   -0.2     -0.6        -0.2                    0.3
+## [2,]                   23.3     25.7        26.7                   24.3
+##      England_SE_and_Central_S
+## [1,]                     -0.1
+## [2,]                     26.1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colRange}\NormalTok{(Data}\SpecialCharTok{$}\NormalTok{Tmean)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Northern_Ireland Scotland_N Scotland_E Scotland_W England_E_and_NE
+## [1,]             -0.7       -2.4       -3.5       -2.3             -2.0
+## [2,]             17.0       15.0       16.0       16.1             18.3
+##      England_NW_and_N_Wales Midlands East_Anglia England_SW_and_S_Wales
+## [1,]                   -2.6     -2.8        -2.5                   -2.4
+## [2,]                   17.9     19.5        20.4                   18.8
+##      England_SE_and_Central_S
+## [1,]                     -2.7
+## [2,]                     20.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{colRange}\NormalTok{(Data}\SpecialCharTok{$}\NormalTok{Tmin)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Northern_Ireland Scotland_N Scotland_E Scotland_W England_E_and_NE
+## [1,]             -4.3       -6.3       -7.4       -5.6             -5.5
+## [2,]             12.2       11.0       11.0       11.6             12.6
+##      England_NW_and_N_Wales Midlands East_Anglia England_SW_and_S_Wales
+## [1,]                   -5.8     -6.6        -5.9                   -5.4
+## [2,]                   12.7     13.5        14.6                   13.9
+##      England_SE_and_Central_S
+## [1,]                     -5.8
+## [2,]                     14.7
+\end{verbatim}
+
+This section looked at the ranges of all the dataset features, all of
+these could also be done with a couple of functions on the whole
+dataset.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# The above can also be done on the full dataset.}
+\NormalTok{maxTemps }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(Data, colMax)}
+\CommentTok{\# print}
+\NormalTok{maxTemps}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                          Tmax Tmean Tmin
+## Northern_Ireland         22.1  17.0 12.2
+## Scotland_N               20.1  15.0 11.0
+## Scotland_E               21.4  16.0 11.0
+## Scotland_W               21.6  16.1 11.6
+## England_E_and_NE         24.4  18.3 12.6
+## England_NW_and_N_Wales   23.3  17.9 12.7
+## Midlands                 25.7  19.5 13.5
+## East_Anglia              26.7  20.4 14.6
+## England_SW_and_S_Wales   24.3  18.8 13.9
+## England_SE_and_Central_S 26.1  20.2 14.7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{minTemps }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(Data, colMin)}
+\CommentTok{\# print}
+\NormalTok{minTemps}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                          Tmax Tmean Tmin
+## Northern_Ireland          1.5  -0.7 -4.3
+## Scotland_N                0.4  -2.4 -6.3
+## Scotland_E               -0.5  -3.5 -7.4
+## Scotland_W                0.6  -2.3 -5.6
+## England_E_and_NE         -0.1  -2.0 -5.5
+## England_NW_and_N_Wales   -0.2  -2.6 -5.8
+## Midlands                 -0.6  -2.8 -6.6
+## East_Anglia              -0.2  -2.5 -5.9
+## England_SW_and_S_Wales    0.3  -2.4 -5.4
+## England_SE_and_Central_S -0.1  -2.7 -5.8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{totRange }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(Data, colRange)}
+\CommentTok{\# print}
+\NormalTok{totRange}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       Tmax Tmean Tmin
+##  [1,]  1.5  -0.7 -4.3
+##  [2,] 22.1  17.0 12.2
+##  [3,]  0.4  -2.4 -6.3
+##  [4,] 20.1  15.0 11.0
+##  [5,] -0.5  -3.5 -7.4
+##  [6,] 21.4  16.0 11.0
+##  [7,]  0.6  -2.3 -5.6
+##  [8,] 21.6  16.1 11.6
+##  [9,] -0.1  -2.0 -5.5
+## [10,] 24.4  18.3 12.6
+## [11,] -0.2  -2.6 -5.8
+## [12,] 23.3  17.9 12.7
+## [13,] -0.6  -2.8 -6.6
+## [14,] 25.7  19.5 13.5
+## [15,] -0.2  -2.5 -5.9
+## [16,] 26.7  20.4 14.6
+## [17,]  0.3  -2.4 -5.4
+## [18,] 24.3  18.8 13.9
+## [19,] -0.1  -2.7 -5.8
+## [20,] 26.1  20.2 14.7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{colAvg }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data) }\FunctionTok{sapply}\NormalTok{(data, mean)}
+\FunctionTok{sapply}\NormalTok{(Data, colAvg)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                              Tmax    Tmean     Tmin
+## Northern_Ireland         12.09057 8.571959 5.070985
+## Scotland_N               10.03461 6.844161 3.740511
+## Scotland_E               10.47251 6.894161 3.373601
+## Scotland_W               11.03163 7.687348 4.436557
+## England_E_and_NE         12.16679 8.412713 4.691423
+## England_NW_and_N_Wales   11.91837 8.468187 5.057482
+## Midlands                 12.94009 8.990815 5.052798
+## East_Anglia              13.69738 9.621594 5.558698
+## England_SW_and_S_Wales   12.99221 9.424270 5.877251
+## England_SE_and_Central_S 13.82950 9.759793 5.711010
+\end{verbatim}
+
+\hypertarget{task-4-trend-and-seasonality}{%
+\section{4 - Task 4 -- Trend and
+Seasonality}\label{task-4-trend-and-seasonality}}
+
+\hypertarget{subset}{%
+\section{4.0 - Subset}\label{subset}}
+
+For each district, consider the 3 time series: max, mean, min. subset
+each of the 30 time series until December 2019.
+
+This section plans to subset the dataset for the time series datasets.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# NONE OF THIS WORKS}
+\CommentTok{\# Time Series function}
+\NormalTok{convert.ts }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data, feature, district)\{ }\CommentTok{\# pass 3 parameters }
+  \FunctionTok{c}\NormalTok{(data, feature, districts) }\SpecialCharTok{\%\textgreater{}\%}  
+    \FunctionTok{paste}\NormalTok{(}\AttributeTok{collapse =} \StringTok{"$"}\NormalTok{) }\CommentTok{\# add $ between each parameter}
+\NormalTok{\}}
+
+\NormalTok{matrix.ts }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(feature)\{}
+  \FunctionTok{lapply}\NormalTok{(data, convert.ts, }\AttributeTok{feature =}\NormalTok{ feature, }\AttributeTok{district =}\NormalTok{ districts)}
+\NormalTok{\}}
+
+\NormalTok{tsMatrix }\OtherTok{\textless{}{-}} \FunctionTok{matrix.ts}\NormalTok{(Data)}
+
+\NormalTok{matCon }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data)\{}
+\NormalTok{  data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{t}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{as.vector}\NormalTok{()}
+\NormalTok{\}}
+\NormalTok{testTS }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(Data, matCon)}
+\FunctionTok{is.vector}\NormalTok{(testTS)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# \textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+
+\CommentTok{\# function to slice dataset}
+\NormalTok{slice.ts }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data)\{}
+\NormalTok{  data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{window}\NormalTok{(}\AttributeTok{start =} \FunctionTok{c}\NormalTok{(}\DecValTok{1884}\NormalTok{,}\DecValTok{12}\NormalTok{), }
+           \AttributeTok{end =} \FunctionTok{c}\NormalTok{(}\DecValTok{2019}\NormalTok{,}\DecValTok{12}\NormalTok{), }
+           \AttributeTok{frequency =} \DecValTok{12}\NormalTok{,}
+           \AttributeTok{extend =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{\}}
+\CommentTok{\# use fun for each dataset.}
+\NormalTok{slicedWindow }\OtherTok{\textless{}{-}} 
+  \FunctionTok{slice.ts}\NormalTok{(Data}\SpecialCharTok{$}\NormalTok{Tmax}\SpecialCharTok{$}\NormalTok{England\_SE\_and\_Central\_S)}
+\end{Highlighting}
+\end{Shaded}
+
+The section above managed to slice a dataset at a time, but struggled to
+do this for all of the datasets within `Data', I struggled converting
+the list to a matrix for each section.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 4.1 {-} Estimate Trend}
+\CommentTok{\# Estimate the trend of each time series using linear, quadratic and cubic }
+\CommentTok{\# regression. Compare your results and use appropriate plots and/or tables }
+\CommentTok{\# to confirm your observations.}
+
+\CommentTok{\# \textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+\CommentTok{\# create time vector}
+\CommentTok{\# create a time vector}
+\NormalTok{time }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(slicedWindow)}
+\CommentTok{\# re{-}scale from 0 {-} 1}
+\NormalTok{time }\OtherTok{\textless{}{-}}\NormalTok{ (time }\SpecialCharTok{{-}} \FunctionTok{min}\NormalTok{(time))}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{max}\NormalTok{(time) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}
+\CommentTok{\# function for linear model}
+\NormalTok{linear.fun }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(timeseries)\{}
+  \CommentTok{\# create linear trend}
+\NormalTok{  linear.fit }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{lm}\NormalTok{(timeseries }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time) }\CommentTok{\# use \textless{}\textless{}{-} for global variables}
+    \CommentTok{\# create linear fitted}
+\NormalTok{  linear.fit }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{fitted}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ts}\NormalTok{(}\AttributeTok{start =} \FunctionTok{c}\NormalTok{(}\DecValTok{1884}\NormalTok{,}\DecValTok{12}\NormalTok{), }\AttributeTok{end =} \FunctionTok{c}\NormalTok{(}\DecValTok{2019}\NormalTok{,}\DecValTok{12}\NormalTok{), }\AttributeTok{frequency =} \DecValTok{12}\NormalTok{) }\OtherTok{{-}\textgreater{}\textgreater{}}\NormalTok{ linear.fitted}
+\NormalTok{\}}
+\CommentTok{\# run linear fun}
+\FunctionTok{linear.fun}\NormalTok{(slicedWindow)}
+\CommentTok{\# check summary}
+\FunctionTok{summary}\NormalTok{(linear.fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = timeseries ~ time)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -14.0220  -4.8619  -0.1373   5.0316  11.9171 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  13.1047     0.2736  47.900   <2e-16 ***
+## time          1.4131     0.4738   2.983   0.0029 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5.51 on 1619 degrees of freedom
+## Multiple R-squared:  0.005465,   Adjusted R-squared:  0.00485 
+## F-statistic: 8.896 on 1 and 1619 DF,  p-value: 0.002901
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Now try to plot}
+\FunctionTok{ts.plot}\NormalTok{(slicedWindow, }\AttributeTok{ylab =} \StringTok{"Temperature"}\NormalTok{)}
+\CommentTok{\# add linear fitted lines}
+\FunctionTok{lines}\NormalTok{(linear.fitted, }\AttributeTok{col =} \StringTok{"green"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\CommentTok{\# add mean line}
+\FunctionTok{abline}\NormalTok{(}\FunctionTok{mean}\NormalTok{(slicedWindow), }\DecValTok{0}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\CommentTok{\# temp is very slowly increasing.}
+\CommentTok{\# \textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+\CommentTok{\# square the time}
+\NormalTok{time2 }\OtherTok{\textless{}{-}}\NormalTok{ (time}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\CommentTok{\# quadratic trend}
+\NormalTok{quadratic.fun }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(timeseries)\{}
+  \CommentTok{\# create quadratic fit model}
+\NormalTok{  quadratic.fit }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{lm}\NormalTok{(timeseries }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time }\SpecialCharTok{+}\NormalTok{ time2)}
+  \CommentTok{\# create quadratic fitted}
+\NormalTok{  quadratic.fit }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{fitted}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ts}\NormalTok{(}\AttributeTok{start =} \FunctionTok{c}\NormalTok{(}\DecValTok{1884}\NormalTok{,}\DecValTok{12}\NormalTok{), }\AttributeTok{end =} \FunctionTok{c}\NormalTok{(}\DecValTok{2019}\NormalTok{,}\DecValTok{12}\NormalTok{), }\AttributeTok{frequency =} \DecValTok{12}\NormalTok{) }\OtherTok{{-}\textgreater{}\textgreater{}}
+\NormalTok{    quadratic.fitted}
+\NormalTok{\}}
+\CommentTok{\# run quad function}
+\FunctionTok{quadratic.fun}\NormalTok{(slicedWindow)}
+\CommentTok{\# check summary}
+\FunctionTok{summary}\NormalTok{(quadratic.fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = timeseries ~ time + time2)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -13.8660  -4.8178  -0.1242   5.0853  11.9001 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)   13.441      0.410  32.780   <2e-16 ***
+## time          -0.605      1.894  -0.319    0.749    
+## time2          2.018      1.834   1.101    0.271    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5.51 on 1618 degrees of freedom
+## Multiple R-squared:  0.006208,   Adjusted R-squared:  0.00498 
+## F-statistic: 5.054 on 2 and 1618 DF,  p-value: 0.006485
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# add linear fitted lines}
+\FunctionTok{lines}\NormalTok{(quadratic.fitted, }\AttributeTok{col =} \StringTok{"green"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\CommentTok{\# \textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}}
+\CommentTok{\# cube time}
+\NormalTok{time3 }\OtherTok{\textless{}{-}}\NormalTok{ time}\SpecialCharTok{\^{}}\DecValTok{3}
+\CommentTok{\# cubic function}
+\NormalTok{cube.fun }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(timeseries)\{}
+  \CommentTok{\# create cubic fit model}
+\NormalTok{  cubic.fit }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{lm}\NormalTok{(timeseries }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time }\SpecialCharTok{+}\NormalTok{ time2 }\SpecialCharTok{+}\NormalTok{ time3)}
+  \CommentTok{\# create cubic fitted}
+\NormalTok{  cubic.fit }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{fitted}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ts}\NormalTok{(}\AttributeTok{start =} \FunctionTok{c}\NormalTok{(}\DecValTok{1884}\NormalTok{,}\DecValTok{12}\NormalTok{), }\AttributeTok{end =} \FunctionTok{c}\NormalTok{(}\DecValTok{2019}\NormalTok{,}\DecValTok{12}\NormalTok{), }\AttributeTok{frequency =} \DecValTok{12}\NormalTok{) }\OtherTok{{-}\textgreater{}\textgreater{}} 
+\NormalTok{    quadratic.fitted}
+\NormalTok{\}}
+\CommentTok{\# run cubic function}
+\FunctionTok{cube.fun}\NormalTok{(slicedWindow)}
+\CommentTok{\# check summary}
+\FunctionTok{summary}\NormalTok{(cubic.fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = timeseries ~ time + time2 + time3)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -13.7276  -4.8674  -0.2116   5.0442  11.8990 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  12.8291     0.5458  23.505   <2e-16 ***
+## time          6.7467     4.7283   1.427   0.1538    
+## time2       -16.3667    10.9894  -1.489   0.1366    
+## time3        12.2565     7.2237   1.697   0.0899 .  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5.506 on 1617 degrees of freedom
+## Multiple R-squared:  0.007975,   Adjusted R-squared:  0.006134 
+## F-statistic: 4.333 on 3 and 1617 DF,  p-value: 0.004744
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# add cubic line}
+\FunctionTok{lines}\NormalTok{(time, }
+\NormalTok{      cubic.fit }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{fitted}\NormalTok{(),}
+      \AttributeTok{col =} \StringTok{\textquotesingle{}yellow\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{lwd =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{testing_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# check fit}
+\FunctionTok{AIC}\NormalTok{(linear.fit) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10136.89
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{AIC}\NormalTok{(quadratic.fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10137.68
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{AIC}\NormalTok{(cubic.fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10136.8
+\end{verbatim}
+
+The section above looks to create a linear, quadratic and cubic model
+for the selected sliced dataset and plots their values with a line.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 4.2 {-} Select Trend}
+\CommentTok{\# Select a trend model for each time series using an appropriate criteria. }
+\CommentTok{\# Are the models selected all the same? If not is there a pattern depending on }
+\CommentTok{\# the region and/or the group (max, mean and min)?}
+
+\CommentTok{\# All datasets had a lower AIC result for linear fit,}
+\CommentTok{\# except for TMAX{-}England\_SE\_and\_Central\_S}
+\end{Highlighting}
+\end{Shaded}
+
+Going through the trend for all of the datasets manually took a very
+long time (which I have omitted), but for most of them the AIC for
+linear.fit seemed to be the best model.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 4.3 {-} Estimate Seasonality}
+\CommentTok{\# After removing the trend using the model selected in the previous step, }
+\CommentTok{\# use the output to estimate the seasonality of each time series employing averaging and sine{-}cosine models. }
+\CommentTok{\# Compare your results and use appropriate plots and/or tables to confirm your observations.}
+
+\NormalTok{get.seasonality }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(timeseries)\{}
+  \CommentTok{\# get the residuals}
+\NormalTok{  sw.notrend }\OtherTok{\textless{}\textless{}{-}}\NormalTok{ (timeseries }\SpecialCharTok{{-}} \FunctionTok{fitted}\NormalTok{(linear.fit))}
+  \CommentTok{\# get seasonal means}
+  \FunctionTok{tapply}\NormalTok{(sw.notrend, }\FunctionTok{cycle}\NormalTok{(sw.notrend), mean)}
+  \CommentTok{\# create months variable as factor}
+\NormalTok{  months }\OtherTok{\textless{}{-}}\NormalTok{ sw.notrend }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{cycle}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{as.factor}\NormalTok{()}
+  \CommentTok{\# seasonal means}
+\NormalTok{  sliced.seas }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{lm}\NormalTok{(sw.notrend }\SpecialCharTok{\textasciitilde{}}\NormalTok{ months }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}
+    \CommentTok{\# evaluate harmonic seasonality}
+  \CommentTok{\# create an empty matrix}
+\NormalTok{  SIN }\OtherTok{\textless{}\textless{}{-}}\NormalTok{ COS }\OtherTok{\textless{}\textless{}{-}}  \FunctionTok{matrix}\NormalTok{(}\AttributeTok{nrow =} \FunctionTok{length}\NormalTok{(time), }\AttributeTok{ncol =} \DecValTok{6}\NormalTok{)}\CommentTok{\# 6 = freq/2}
+  \CommentTok{\# loop through}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)\{}
+\NormalTok{    SIN[,i] }\OtherTok{\textless{}{-}} \FunctionTok{sin}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{pi}\SpecialCharTok{*}\NormalTok{i}\SpecialCharTok{*}\NormalTok{time)}
+\NormalTok{    COS[,i] }\OtherTok{\textless{}{-}} \FunctionTok{cos}\NormalTok{(}\DecValTok{2}\SpecialCharTok{*}\NormalTok{pi}\SpecialCharTok{*}\NormalTok{i}\SpecialCharTok{*}\NormalTok{time)}
+\NormalTok{  \}}
+  \CommentTok{\# model all season harmonic}
+  \CommentTok{\# model notrend against all values with {-}1}
+\NormalTok{  slice.har1 }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{lm}\NormalTok{(sw.notrend }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{ ,}
+                   \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{SIN =}\NormalTok{ SIN[,}\DecValTok{1}\NormalTok{], }\AttributeTok{COS =}\NormalTok{ COS[,}\DecValTok{1}\NormalTok{]))}
+  \CommentTok{\# slice 2}
+\NormalTok{  slice.har2 }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{lm}\NormalTok{(sw.notrend }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{ ,}
+                   \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{SIN =}\NormalTok{ SIN[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{], }\AttributeTok{COS =}\NormalTok{ COS[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{]))}
+  \CommentTok{\# slice 3}
+\NormalTok{  slice.har3 }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{lm}\NormalTok{(sw.notrend }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{ ,}
+                    \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{SIN =}\NormalTok{ SIN[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{], }\AttributeTok{COS =}\NormalTok{ COS[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]))}
+  \CommentTok{\# slice 4}
+\NormalTok{  slice.har4 }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{lm}\NormalTok{(sw.notrend }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{ ,}
+                    \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{SIN =}\NormalTok{ SIN[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{], }\AttributeTok{COS =}\NormalTok{ COS[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]))}
+  \CommentTok{\# slice 5}
+\NormalTok{  slice.har5 }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{lm}\NormalTok{(sw.notrend }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{ ,}
+                    \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{SIN =}\NormalTok{ SIN[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{], }\AttributeTok{COS =}\NormalTok{ COS[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]))}
+  \CommentTok{\# slice 6}
+\NormalTok{  slice.har6 }\OtherTok{\textless{}\textless{}{-}} \FunctionTok{lm}\NormalTok{(sw.notrend }\SpecialCharTok{\textasciitilde{}}\NormalTok{ . }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{ ,}
+                    \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{SIN =}\NormalTok{ SIN[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{], }\AttributeTok{COS =}\NormalTok{ COS[,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{]))}
+\NormalTok{\}}
+\CommentTok{\# run seasonality fun}
+\FunctionTok{get.seasonality}\NormalTok{(slicedWindow)}
+
+\NormalTok{getAIC }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{slice.har.1 =} \FunctionTok{AIC}\NormalTok{(slice.har1),}
+  \AttributeTok{slice.har.2 =} \FunctionTok{AIC}\NormalTok{(slice.har2),}
+  \AttributeTok{slice.har.3 =} \FunctionTok{AIC}\NormalTok{(slice.har3),}
+  \AttributeTok{slice.har.4 =} \FunctionTok{AIC}\NormalTok{(slice.har4),}
+  \AttributeTok{slice.har.5 =} \FunctionTok{AIC}\NormalTok{(slice.har5),}
+  \AttributeTok{slice.har.6 =} \FunctionTok{AIC}\NormalTok{(slice.har6)}
+\NormalTok{)}
+\CommentTok{\# print with knitr table}
+\FunctionTok{kable}\NormalTok{(getAIC, }\AttributeTok{caption =} \StringTok{"AIC\textquotesingle{}s for all harmonic seasonalities"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}rrrrrr@{}}
+\caption{AIC's for all harmonic seasonalities}\tabularnewline
+\toprule
+slice.har.1 & slice.har.2 & slice.har.3 & slice.har.4 & slice.har.5 &
+slice.har.6 \\ \addlinespace
+\midrule
+\endfirsthead
+\toprule
+slice.har.1 & slice.har.2 & slice.har.3 & slice.har.4 & slice.har.5 &
+slice.har.6 \\ \addlinespace
+\midrule
+\endhead
+10134.41 & 10137.16 & 10140.49 & 10144.25 & 10147.99 &
+10151.88 \\ \addlinespace
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# sort decreasing}
+\NormalTok{getAIC }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{sort}\NormalTok{(}\AttributeTok{decreasing =}\NormalTok{ F)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   slice.har.1 slice.har.2 slice.har.3 slice.har.4 slice.har.5 slice.har.6
+## 1    10134.41    10137.16    10140.49    10144.25    10147.99    10151.88
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#summary(slice.har1)}
+\CommentTok{\#summary(slice.har2)}
+\CommentTok{\#summary(slice.har3)}
+\CommentTok{\#summary(slice.har4)}
+\CommentTok{\#summary(slice.har5)}
+\CommentTok{\#summary(slice.har6)}
+
+\CommentTok{\# removed as it doesnt work.}
+\CommentTok{\# plot(slicedWindow,}
+\CommentTok{\#      main = "AVG TEMPS IN UK",}
+\CommentTok{\#      xlab = "Year",}
+\CommentTok{\#      ylab = "AVG TEMP",}
+\CommentTok{\#      type = "l")}
+\CommentTok{\# lines doesnt work for some reason.}
+\CommentTok{\# lines(time, }
+\CommentTok{\#       fitted(slice.har2),}
+\CommentTok{\#       lwd = 3,}
+\CommentTok{\#       type = "l",}
+\CommentTok{\#       col = "blue")}
+\end{Highlighting}
+\end{Shaded}
+
+This section looked to estimate the seasonality for the sliced dataset
+whilst looking at the AIC results for each harmonic seasonality.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 4.4 {-} Select Seasonality}
+\CommentTok{\# Select a seasonal model for each time series using an appropriate criteria.}
+\CommentTok{\# Are the models selected all the same? }
+\CommentTok{\# If not is there a pattern depending on the region and/or the group (max, min and mean)?}
+
+
+\CommentTok{\# 4.5 {-} Estimate Seasonality}
+\CommentTok{\# Estimate a combined model for trend and seasonality using the results of the previous steps.}
+\CommentTok{\# Call this model “final”.}
+
+
+
+
+\CommentTok{\# 4.6 {-} Estimate Seasonality}
+\CommentTok{\# Estimate trend and seasonality using a combined quadratic and sin{-}cosine (of order 2) models.}
+\CommentTok{\# Call this model “test”}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{task-5}{%
+\section{5 - Task 5}\label{task-5}}
+
+\hypertarget{reflection}{%
+\section{6 - Reflection}\label{reflection}}
+
+There were many parts within this coursework which I really didn't
+understand so a lot of this was left out - I am hopeful that the small
+parts I did were enough to get me through.
+
+\end{document}
