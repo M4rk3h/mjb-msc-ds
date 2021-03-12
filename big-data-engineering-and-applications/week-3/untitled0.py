@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+@author: mark baber
+"""
 import sys
 for line in sys.stdin:
     line = line.strip()
