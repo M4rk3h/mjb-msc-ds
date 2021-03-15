@@ -8,7 +8,7 @@ output:
 subtitle: '17076749'
 ---
 
-This report will look at using data mining techniques on a time series dataset. This report will be broken down into several parts, from getting the data, exploring the data, looking into trend and seasonality of the data before continuing onto a more indepth analysis. This indepth analysis will cover ARMA and forecasting.
+This report will look at using data mining techniques on a time series dataset. This report will be broken down into several parts, from getting the data, exploring the data, looking into trend and seasonality of the data before continuing onto a more in-depth analysis. This in-depth analysis will cover ARMA and forecasting.
 
 All of this will be done using R and Rstudio, with the use of limited packages which has been added below:
 - magrittr
@@ -176,17 +176,21 @@ maxTemps <- sapply(Data, colMax)
 minTemps <- sapply(Data, colMin)
 totRange <- sapply(Data, colRange)
 ```
-Here is the max temperatures
+
+Here are the max temperatures:
+
 ```{r}
 maxTemps
 ```
 
-The min temps.
+Here are the min temperatures:
+
 ```{r}
 minTemps
 ```
 
-And the ranges.
+And here are the ranges:
+
 ```{r}
 totRange
 ```
@@ -205,6 +209,7 @@ sapply(Data, colAvg)
 For each district, consider the 3 time series: max, mean, min. subset each of the 30 time series until December 2019.
 
 This section plans to subset the dataset for the time series datasets.
+
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 ## NONE OF THIS WORKS
 # Time Series function
@@ -430,15 +435,27 @@ This section looked to estimate the seasonality for the sliced dataset whilst lo
 # Estimate a combined model for trend and seasonality using the results of the previous steps.
 # Call this model “final”.
 
+get.final.model <- function(){
+  # xyz
+}
 
-
-
+adf.test(slicedWindow)
 # 4.6 - Estimate Seasonality
 # Estimate trend and seasonality using a combined quadratic and sin-cosine (of order 2) models.
 # Call this model “test”
 ```
 
-# 5 - Task 5
+# 5 - Task 5 – ARMA and Forecasting (20%)
+
+```{r}
+# Using the final and the test modelestimated in the previous task,remove trend and seasonality from each of the 30 time series. You will now have 60 residuals time series. 
+
+# Fit the residuals with an appropriate ARMA model.
+
+# Forecast the average max, min and mean temperature for each month of 2020. Remember that you also have to forecast the trend and seasonal components. 
+
+# Compare your forecasts with # the actual values. You may find it useful to look at the following https://otexts.com/fpp2/accuracy.html Which model performs better
+```
 
 # 6 - Reflection
-There were many parts within this coursework which I really didn't understand so a lot of this was left out - I am hopeful that the small parts I did were enough to get me through.
+Whilst the course work seemed to be very straight forward working with 1 dataset, trying to create multiple functions for this timeseries analysis proved to be a lot more difficult than I thought. 

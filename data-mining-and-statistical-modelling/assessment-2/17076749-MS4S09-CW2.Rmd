@@ -1,129 +1,462 @@
 ---
 title: "MS4S09 Coursework 2 - 2020/21"
-subtitle: "17076749"
 author: "Mark Baber"
-date: "xx/xx/2021"
-output: pdf_document
+date: "11/03/2021"
+output:
+  word_document: default
+  pdf_document: default
+subtitle: '17076749'
 ---
 
-This report will be my project on time series data mining, where there will be some R scripting which will go through a few tasks to get a better understanding of a few datasets.
+This report will look at using data mining techniques on a time series dataset. This report will be broken down into several parts, from getting the data, exploring the data, looking into trend and seasonality of the data before continuing onto a more in-depth analysis. This in-depth analysis will cover ARMA and forecasting.
 
-Lets first import the packages which will be used throughout this report.
+All of this will be done using R and Rstudio, with the use of limited packages which has been added below:
+- magrittr
+- tseries
+- knitr
 
-```{r packages, include=FALSE}
+```{r packages, message=FALSE, warning=FALSE, include=FALSE}
 library(magrittr)
-# set the seed
-set.seed(17076749)
+library(tseries)
+library(knitr)
 ```
 
-# Task 1 – Getting the data (10%)
-This section of the report will go over how to get the datasets from a URL, it has been asked that the dataset not be downloaded individually and that the use of functions be used. 
+# 1 Task 1 – Getting the data (10%)
+Write an R script that downloads the data directly from the website for the 30 time series (3 time series for each of the 10 districts) using the “Year ordered statistics” option, and selecting the districts listed. Download up to December 2021.
 
-My way of understanding this would be to get a list of the 10 districts including the '.txt' and we can use a function to get a certain district.
+Create the 30 time-series objects in R to store the data you have downloaded.
+Remember to specify the appropriate starting point and frequency.
 
-```{r}
+```{r message=FALSE, warning=FALSE, include=FALSE}
+# set address
+address <- "https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/"
+# set features
+features <- c("Tmax", "Tmean", "Tmin")
 # create a list of districts
-districts <- list("Northern_Ireland.txt", "Scotland_N.txt",
-                  "Scotland_E.txt", "Scotland_W.txt",
-                  "England_E_and_NE.txt", "England_NW_and_N_Wales.txt",
-                  "Midlands.txt", "East_Anglia.txt",
-                  "England_SW_and_S_Wales.txt", "England_SE_and_Central_S.txt")
+districts <- c("Northern_Ireland",
+                  "Scotland_N",
+                  "Scotland_E",
+                  "Scotland_W",
+                  "England_E_and_NE",
+                  "England_NW_and_N_Wales",
+                  "Midlands",
+                  "East_Anglia",
+                  "England_SW_and_S_Wales",
+                  "England_SE_and_Central_S")
+```
 
-# create 3 different URLS (max, mean, min) for the districts
-urlMAX = paste("https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmax/date/",districts[], sep = "")
-urlMEAN = paste("https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmean/date/",districts[], sep = "")
-urlMIN = paste("https://www.metoffice.gov.uk/pub/data/weather/uk/climate/datasets/Tmin/date/",districts[], sep = "")
+The section above looked to set up the base url for the datasets, the 3 different features which changed within the url and the 10 districts which will be needed for the url. Before going further into creating a function, there was some pre-analysis on the scraped dataset to calculate the number of rows and looked into which rows & columns should be omitted.
 
-# make a function to pass through url x
-getMAX <- function(x) {
-  #print(search_url[x])
-  fread(urlMAX[x], fill = TRUE)
+The next step would be to create the function which will grab each dataset, from the url using the base address, features and all districts.
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+# how many rows
+nrow <- 2020-1884+1
+# Time Series function
+create.ts <- function(feature, district){ # pass 2 parameters 
+  c(address, feature, "/date/", district, ".txt") %>%  # set the url with several features adding 2 text fields
+    paste(collapse = "") %>%  # collapse the set urls above with no space
+    read.table(skip = 5, header = TRUE, nrows = nrow) %>%  # read the table, skip 5 rows, add first col as headers and nrows is 2020-1884+1
+    subset(select = 2:13) %>%  # only select Jan - Dec
+    t() %>% # transpose matrix
+    as.vector() %>% # save it as a vector 
+    ts(start = c(1884, 1),frequency = 12) # create a time-series object
+}
+# test the function
+create.ts("Tmax", "Northern_Ireland")
+# function to get all districts & features 
+readFeatures <- function(feature){
+  lapply(districts, create.ts, feature = feature) %>% 
+    set_names(districts)
+}
+# get them all together.
+Data <- lapply(features, readFeatures) %>% set_names(features)
+```
+
+```{r}
+Data$Tmax$Northern_Ireland %>% head()
+```
+Here is a head of the first entry within Tmax - Now that the function has managed to get all datasets for each feature (TMAX-TMEAN-TMIN) lets move on to the next step which will be to explore these datasets.
+
+# 2 - Task 2 – R programming (5%)
+Write an R script to identify the district and date (year and month) of the highest and the lowest max, min and mean temperature (six results in total).
+
+This section of the report will look to calculate the max, mean and min tempertures for each subset of data whilst pointing out the district and date.
+```{r echo=FALSE}
+# 2 - Task 2
+# find the max value's index
+maxIndex <- Data$Tmax %>% 
+  unlist() %>% 
+  as.vector() %>% 
+  which.max() 
+
+# find sub position
+subIndex <- round((maxIndex/16440)*10) # 8 - This could be district
+
+# find max value
+# maxVal <- DTmUn %>% which.max()
+
+# find year
+# maxYear <- floor(time(DTmUn))[which.max(DTmUn)]
+
+# month
+# maxMonth <- month.abb[(time(Data$Tmax)[which.max(Data$Tmax)] %>% 1)*12+1]
+
+# calculate regions
+# maxRegions <- names(Data$Tmax)
+
+# GETS MONTH
+unlistedTMAX <- Data$Tmax %>% unlist()
+myMm <- month.abb[(time(unlistedTMAX)[which.min(unlistedTMAX)] %% 1)*12+1]
+# plot(Data$Tmax$Northern_Ireland, type = 'l')
+
+# get max temp of Tmax
+sapply(Data$Tmax, which.max)
+
+# data_min_value_time <- time(Data)[which.min(Data)]
+
+# unlist tMAX
+tmax_unl <- Data$Tmax %>% 
+  unlist() %>% 
+  as.vector()
+```
+
+For task 2, I wasn't able to figure this out so this section will be left out.
+
+# 3 - Task 3 – Exploratory Data Analysis (25%)
+Carry out an EDA of the data you have downloaded. In order to complete your analysis, you may find it useful to answer (but not only!) the following questions:
+
+− Which district is the coldest/warmest? Describe used criteria.
+− Which district has the widest temperature range?
+− Are winters/summers getting colder/hotter?
+
+```{r}
+# find max value
+colMax <- function(data) sapply(data, max, na.rm = TRUE)
+
+colMax(Data$Tmax) %>% which.max()
+# East_Anglia has the highest temp within the Tmax series
+colMax(Data$Tmean) %>% which.max()
+# East_Anglia has the highest temp within the Tmean series.
+colMax(Data$Tmin) %>% which.max()
+# England_SE_and_Central_S has the highest temp within Tmin.
+```
+
+Above I have looked at the max temperatures whilst also finding the max of those with which.max. Now lets create a function to find the lowest temperatures.
+
+```{r}
+# find lowest value
+colMin <- function(data) sapply(data, min, na.rm = TRUE)
+
+colMin(Data$Tmax) %>% which.min()
+# Midlands has the lowest temp within the Tmax series.
+colMin(Data$Tmean) %>% which.min()
+# Scotland_E has the lowest temp within the Tmean series.
+colMin(Data$Tmin) %>% which.min()
+# Scotland_E has the lowest temp within the Tmin series
+```
+
+This section looked at the lowest temperatures within the dataset, with Midlands having the lowest temp within Tmax, Scotland_E having the lowest within Tmean and again Scotland_E having the lowest for Tmin.
+
+```{r}
+colRange <- function(data) sapply(data, range, na.rm = TRUE)
+
+colRange(Data$Tmax)
+
+colRange(Data$Tmean)
+
+colRange(Data$Tmin)
+```
+
+This section looked at the ranges of all the dataset features, all of these could also be done with a couple of functions on the whole dataset.
+
+```{r}
+# The above can also be done on the full dataset.
+maxTemps <- sapply(Data, colMax)
+minTemps <- sapply(Data, colMin)
+totRange <- sapply(Data, colRange)
+```
+
+Here are the max temperatures:
+
+```{r}
+maxTemps
+```
+
+Here are the min temperatures:
+
+```{r}
+minTemps
+```
+
+And here are the ranges:
+
+```{r}
+totRange
+```
+
+
+And below is a function which looks to calculate the mean temperature for each district for each feature.
+
+```{r echo=FALSE}
+colAvg <- function(data) sapply(data, mean)
+sapply(Data, colAvg)
+```
+
+
+# 4 - Task 4 – Trend and Seasonality 
+# 4.0 - Subset
+For each district, consider the 3 time series: max, mean, min. subset each of the 30 time series until December 2019.
+
+This section plans to subset the dataset for the time series datasets.
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+## NONE OF THIS WORKS
+# Time Series function
+convert.ts <- function(data, feature, district){ # pass 3 parameters 
+  c(data, feature, districts) %>%  
+    paste(collapse = "$") # add $ between each parameter
 }
 
-getMEAN <- function(x) {
-  #print(search_url[x])
-  fread(urlMEAN[x], fill = TRUE)
+matrix.ts <- function(feature){
+  lapply(data, convert.ts, feature = feature, district = districts)
 }
 
-getMIN <- function(x) {
-  #print(search_url[x])
-  fread(urlMIN[x], fill = TRUE)
+tsMatrix <- matrix.ts(Data)
+
+matCon <- function(data){
+  data %>% 
+    t() %>% 
+    as.vector()
+}
+testTS <- lapply(Data, matCon)
+is.vector(testTS)
+```
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# function to slice dataset
+slice.ts <- function(data){
+  data %>% window(start = c(1884,12), 
+           end = c(2019,12), 
+           frequency = 12,
+           extend = FALSE)
+}
+# use fun for each dataset.
+slicedWindow <- 
+  slice.ts(Data$Tmax$England_SE_and_Central_S)
+```
+
+The section above managed to slice a dataset at a time, but struggled to do this for all of the datasets within 'Data', I struggled converting the list to a matrix for each section.
+
+```{r echo=FALSE}
+# 4.1 - Estimate Trend
+# Estimate the trend of each time series using linear, quadratic and cubic 
+# regression. Compare your results and use appropriate plots and/or tables 
+# to confirm your observations.
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# create time vector
+# create a time vector
+time <- 1:length(slicedWindow)
+# re-scale from 0 - 1
+time <- (time - min(time))/(max(time) - 1)
+# function for linear model
+linear.fun <- function(timeseries){
+  # create linear trend
+  linear.fit <<- lm(timeseries ~ time) # use <<- for global variables
+    # create linear fitted
+  linear.fit %>% fitted() %>% ts(start = c(1884,12), end = c(2019,12), frequency = 12) ->> linear.fitted
+}
+# run linear fun
+linear.fun(slicedWindow)
+# check summary
+# summary(linear.fit)
+# Now try to plot
+ts.plot(slicedWindow, ylab = "Temperature")
+# add linear fitted lines
+lines(linear.fitted, col = "green", lwd = 2)
+# add mean line
+abline(mean(slicedWindow), 0, col = "blue", lwd = 2)
+# temp is very slowly increasing.
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# square the time
+time2 <- (time^2)
+# quadratic trend
+quadratic.fun <- function(timeseries){
+  # create quadratic fit model
+  quadratic.fit <<- lm(timeseries ~ time + time2)
+  # create quadratic fitted
+  quadratic.fit %>% fitted() %>% ts(start = c(1884,12), end = c(2019,12), frequency = 12) ->>
+    quadratic.fitted
+}
+# run quad function
+quadratic.fun(slicedWindow)
+# check summary
+# summary(quadratic.fit)
+# add linear fitted lines
+lines(quadratic.fitted, col = "green", lwd = 2)
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# cube time
+time3 <- time^3
+# cubic function
+cube.fun <- function(timeseries){
+  # create cubic fit model
+  cubic.fit <<- lm(timeseries ~ time + time2 + time3)
+  # create cubic fitted
+  cubic.fit %>% fitted() %>% ts(start = c(1884,12), end = c(2019,12), frequency = 12) ->> 
+    quadratic.fitted
+}
+# run cubic function
+cube.fun(slicedWindow)
+# check summary
+# summary(cubic.fit)
+# add cubic line
+lines(time, 
+      cubic.fit %>% fitted(),
+      col = 'yellow',
+      lwd = 3)
+
+```
+
+```{r echo=FALSE}
+# check fit
+AIC(linear.fit) 
+AIC(quadratic.fit)
+AIC(cubic.fit)
+```
+Here is how we would check the AIC - lower is better.
+
+The section above looks to create a linear, quadratic and cubic model for the selected sliced dataset and plots their values with a line.
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+# 4.2 - Select Trend
+# Select a trend model for each time series using an appropriate criteria. 
+# Are the models selected all the same? If not is there a pattern depending on 
+# the region and/or the group (max, mean and min)?
+
+# All datasets had a lower AIC result for linear fit,
+# except for TMAX-England_SE_and_Central_S
+```
+
+Going through the trend for all of the datasets manually took a very long time (which I have omitted), but for most of them the AIC for linear.fit seemed to be the best model.
+
+```{r echo=FALSE}
+# 4.3 - Estimate Seasonality
+# After removing the trend using the model selected in the previous step, 
+# use the output to estimate the seasonality of each time series employing averaging and sine-cosine models. 
+# Compare your results and use appropriate plots and/or tables to confirm your observations.
+
+get.seasonality <- function(timeseries){
+  # get the residuals
+  sw.notrend <<- (timeseries - fitted(linear.fit))
+  # get seasonal means
+  tapply(sw.notrend, cycle(sw.notrend), mean)
+  # create months variable as factor
+  months <- sw.notrend %>% cycle() %>% as.factor()
+  # seasonal means
+  sliced.seas <<- lm(sw.notrend ~ months - 1)
+    # evaluate harmonic seasonality
+  # create an empty matrix
+  SIN <<- COS <<-  matrix(nrow = length(time), ncol = 6)# 6 = freq/2
+  # loop through
+  for(i in 1:6){
+    SIN[,i] <- sin(2*pi*i*time)
+    COS[,i] <- cos(2*pi*i*time)
+  }
+  # model all season harmonic
+  # model notrend against all values with -1
+  slice.har1 <<- lm(sw.notrend ~ . -1 ,
+                   data.frame(SIN = SIN[,1], COS = COS[,1]))
+  # slice 2
+  slice.har2 <<- lm(sw.notrend ~ . -1 ,
+                   data.frame(SIN = SIN[,1:2], COS = COS[,1:2]))
+  # slice 3
+  slice.har3 <<- lm(sw.notrend ~ . -1 ,
+                    data.frame(SIN = SIN[,1:3], COS = COS[,1:3]))
+  # slice 4
+  slice.har4 <<- lm(sw.notrend ~ . -1 ,
+                    data.frame(SIN = SIN[,1:4], COS = COS[,1:4]))
+  # slice 5
+  slice.har5 <<- lm(sw.notrend ~ . -1 ,
+                    data.frame(SIN = SIN[,1:5], COS = COS[,1:5]))
+  # slice 6
+  slice.har6 <<- lm(sw.notrend ~ . -1 ,
+                    data.frame(SIN = SIN[,1:6], COS = COS[,1:6]))
+}
+# run seasonality fun
+get.seasonality(slicedWindow)
+
+getAIC <- data.frame(
+  slice.har.1 = AIC(slice.har1),
+  slice.har.2 = AIC(slice.har2),
+  slice.har.3 = AIC(slice.har3),
+  slice.har.4 = AIC(slice.har4),
+  slice.har.5 = AIC(slice.har5),
+  slice.har.6 = AIC(slice.har6)
+)
+# print with knitr table
+kable(getAIC, caption = "AIC's for all harmonic seasonalities")
+# sort decreasing
+getAIC %>% sort(decreasing = F)
+
+#summary(slice.har1)
+#summary(slice.har2)
+#summary(slice.har3)
+#summary(slice.har4)
+#summary(slice.har5)
+#summary(slice.har6)
+
+# removed as it doesnt work.
+# plot(slicedWindow,
+#      main = "AVG TEMPS IN UK",
+#      xlab = "Year",
+#      ylab = "AVG TEMP",
+#      type = "l")
+# lines doesnt work for some reason.
+# lines(time, 
+#       fitted(slice.har2),
+#       lwd = 3,
+#       type = "l",
+#       col = "blue")
+```
+
+This section looked to estimate the seasonality for the sliced dataset whilst looking at the AIC results for each harmonic seasonality.
+
+```{r echo=FALSE}
+# 4.4 - Select Seasonality
+# Select a seasonal model for each time series using an appropriate criteria.
+# Are the models selected all the same? 
+# If not is there a pattern depending on the region and/or the group (max, min and mean)?
+
+
+# 4.5 - Estimate Seasonality
+# Estimate a combined model for trend and seasonality using the results of the previous steps.
+# Call this model “final”.
+
+get.final.model <- function(){
+  # xyz
 }
 
+adf.test(slicedWindow)
+# 4.6 - Estimate Seasonality
+# Estimate trend and seasonality using a combined quadratic and sin-cosine (of order 2) models.
+# Call this model “test”
 ```
-Now we all of that set up, we can look to test the functions to see if we can get the required datasets.
+
+# 5 - Task 5 – ARMA and Forecasting (20%)
 
 ```{r}
-# get the first district max temps
-myData <- getMAX(1)
-# save just the first row for the years
-myYears <- myData[7:143,1]
-colnames(myYears) <- 'Year'
-# start at 2 to remove the year
-myData <- myData[,2:13] 
-head(myData)
-# remove rows 1-5
-myData <- myData[6:143]
-head(myData)
-```
-Now here we can see we have managed to only take the months Jan - Dec but the first columns are the month. Lets use this first columns to rename them.
+# Using the final and the test modelestimated in the previous task,remove trend and seasonality from each of the 30 time series. You will now have 60 residuals time series. 
 
-```{r}
-# get the months from dataset
-months <- myData[1,1:12]
-# check to make sure we got them
-head(months)
-# change to char
-months <- as.character(months)
-months
-# is.character(months)
-```
-Now to change the colnames from V2-V13 to the months Jan-Dec
-```{r}
-# Now we have the months, lets delete them from the dataset
-myData <- myData[-1,1:12]
-# make sure it worked
-head(myData)
-# now to set the names
-colnames(myData) <- months
-# make sure it worked again
-head(myData)
-```
-# we might need to convert to vector
-```{r vector, include=FALSE}
-# convert to vector
-myData %>% t() %>% as.vector() # this takes a while.
+# Fit the residuals with an appropriate ARMA model.
+
+# Forecast the average max, min and mean temperature for each month of 2020. Remember that you also have to forecast the trend and seasonal components. 
+
+# Compare your forecasts with # the actual values. You may find it useful to look at the following https://otexts.com/fpp2/accuracy.html Which model performs better
 ```
 
-# Task 2 – R programming (5%)
-
-Write an R script to identify the district and date (year and month) of the highest and the lowest max, min and mean temperature(six results in total)
-
-```{r}
-
-```
-
-
-# Task 3 – Exploratory Data Analysis (30%)
-
-# Task 4 – Trend and Seasonality (20%)
-```{r}
-# TREND 
-tempD <- ts(myData, start = 1884, frequency = 12)
-tempD %>% ts(start = 1879, frequency = 12) -> tempD
-tempD %>% ts.plot()
-```
-
-```{r}
-# TREND 
-tempD <- ts(myData, start = 1884, frequency = 1/12)
-tempD %>% ts(start = 1884, frequency = 12) -> tempD
-tempD %>% ts.plot()
-```
-
-
-# Task 5 – ARMA and Forecasting (25%)
-
-# Report (10%)
-
-Leave this section blank for marking
+# 6 - Reflection
+Whilst the course work seemed to be very straight forward working with 1 dataset, trying to create multiple functions for this timeseries analysis proved to be a lot more difficult than I thought. 
+I was also struggling with my mental health and some personal problems within my life, even with EC's I was really struggling to concentrate on this coursework.
