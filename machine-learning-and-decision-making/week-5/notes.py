@@ -107,3 +107,13 @@ def myFunFour():
     def der2(y):
         return 2*y
     
+
+e = 10
+x = 15
+y = 4
+print("e^y^2", np.exp(y^2))
+
+#myFunOne()
+#myFunTwo()
+#myFunThree()
+myFunFour()
