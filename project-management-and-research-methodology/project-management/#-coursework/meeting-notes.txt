@@ -1,0 +1,97 @@
+
+MSc Project Management
+Last edited: 20/03
+Initial Note
+Created group on 10/02/2021
+ 
+Meeting 1 (24th February 2021)
+Scrum Team meeting - familiarising ourselves with each other, getting to know other members of the scrum team.
+ 
+Setting a time for the next meeting and the topic of discussion, which will be documentation relating to Deliverable 4.
+ 
+ 
+Meeting 2 (10th March 2021)
+Tina was unanimously nominated as Project Manager.
+ 
+We ranked our preference on Deliverables in order of importance (Tina is asking the absent team member her opinion first, this is a Scrum team and everyone is valuable and important :D)
+ 
+We decided that working on major deliverables and topics of interest (e.g. scope, time) in pairs would be a very good way of moving forward. This approach will change dependent on the deliverable, for example Mark & Dean will both take a separate approach to the Appraisal as discussed in lectures (will be noted in Deliverable 3, whether we learned a certain approach was better or worse).  Others will be where someone creates a document/diagram and feeds back to their partner, extra corrections and modifications selected and corrected.
+ 
+We agreed that no deliverable will be signed off as complete and 'ready for deployment' without a full team Scrum meeting to ensure that everyone is happy with the final deliverable in its exact form that it will be submitted in.
+ 
+Dean & Mark both put themselves forward for the Project Business Appraisal (Deliverable 2) and also the estimation (Jake and Tina will use these in some of their tasks for Deliverable 4).
+ 
+Jake & Tina are taking charge on alot of work for Deliverable 4, concerning documentation, diagrams and the heavy project management on the fly elements. In particular:
+Tina will come up with Requirements documentation & the accompanying Requirements Traceability Matrix. Jake is her partner for this not just for feedback and subsequent improvement and expansion (if necessary) but also to delegate to if the Project Manager requires it.
+Jake is taking charge with alot of the Time Management techniques, particularly coming up with an activity list and basic hierarchy by next meeting, from this a preliminary Work Breakdown Structure and subsequent WBS Dictionary for the major and minor activities involved (the list is for next meeting, the structure and gantt chart is for the next, as estimation will need to be given to Jake first). Either Zainab or Tina can assist Jake in this, dependent on preference.
+Once a WBS is complete, Jake is happy to start on Activity Sequencing (With help from his partner or the entire group as a whole) as the dependencies can be quite tough to figure out. Once this is done he will create a Network Diagram and all the associated calculations (Float, ES, EF, LS, LF etc) which can then be activity boxed). This step will take a long time due to there being so many processes, much revision and collaboration with a partner (or the whole team) will be required for these essential documents and diagrams.
+Jake & and a Partner will discuss ideas for implementing a resource clash or critical path crash, and how this would be attended to (Deliverable 3 or 4) 
+Deliverable 1 has no one yet assigned, Jake is happy to do the voiceover if others aren't. No one yet assigned for the Powerpoint creation and associated research.
+Deliverable 3 requires reflective review and will be compiled by everyone. A document will be shared which everyone can edit and add bullet points to (not too long preferably, or split into a list of sub-bulletpoints) which will then be written by someone on the project team towards the end of the coursework period. 
+For Deliverable 3, Tina & Zainab will research Scrum and evaluate it critically (advantages, Disadvantages). Critical Analysis of other approaches that could've been taken, but why we did or didn't choose them is also necessary.
+We also noted that Risk Management (a topic that has not yet been covered) will need to be incorporated for Deliverable 4. 
+ 
+Next Meeting will be on Wednesday 17th March 2021.
+ 
+Proposed Scrum Agenda 1
+Vision for the finished product, raise the bar.
+Scrum Values (Schwaber K. and Sutherland, J. www.scrum.org. "The Scrum Guide" 2020) Comittment, Focus, Openness, Respect and Courage.
+Remember the Scrum process is several iterations of Plan - Build - Test - Review.....
+ 
+Inspect Scrum Artifacts
+Finish agreeing roles and responsibilities + deputies.
+Review Jake's proposed task list for the WBS (product backlog)
+Sprint Planning
+Agree the first sprint duration
+Define the first sprint product backlog / tasks from Jake's proposed task list.
+1. Why is this sprint valuable?
+2. What will be done?
+3. How will the work get done?
+Foresee any risks or issues with the sprint tasks and agree actions
+Sprint Review
+Review what the team accomplished in the last sprint.
+Adaptation of the process for best results
+Any improvements,  queries, concerns, ideas.
+Confirm attendance for next meeting :)
+ 
+ 
+Meeting 3 (17th March 2021)
+Sprint Backlog - Meeting 2:
+Goal for previous sprint was the activity list: Done! (JM) 
+ 
+Firstly we discussed last meeting and pointed each scrum player in the direction of the Activity List (Jake's goal for the previous sprint which will inform the rest of the project that can then be used however a team member wants!) for their chosen deliverable(s). 
+ 
+It's been agreed that each sprint will be a week (specifically, the time between meeting on Wednesday to the next meeting the next Wednesday) to give everyone plenty of time for their chosen tasks and goals. A goal in particular will be set for each person for each sprint, with completion noted in next week's meeting notes.
+ 
+Delegation is complete, with the absent responsibility for Deliverable 1 delegated to Zainab. Multiple options were extended to her by the PM to ensure that she had adequate amounts of choice. She will also assist Jake with the Path Diagrams section to help with the peer review process. She will also assist Tina with Scrum evaluation once Deliverable 3 is started. 
+ 
+SPRINT PLANNING:
+This will be the most valuable sprint so far as Deliverables 1, 2 & 4 will all be started in preparation for Next week's meeting. This will inform the later parts of each deliverable and particularly Deliverable 3, the Reflective Review.
+ Goals for each Team Member: Tina will work on the Requirements Traceability Matrix, Enforcing Scrum Team structure etc. Jake will work on the Work Breakdown Structure & WBS Dictionary (w/o estimates for now). If there is enough time, then a Dependency Table can also be started. Dean & Mark will collaboratively work on Deliverable 2 (Financial Business Justification), deciding between them who will do which method and coming together to compare their final conclusions on whether the project should go ahead or not. Zainab will work on the first draft of Deliverable 1 (Powerpoint presentation on PM failure), producing some draft slides with bullet points and also a word document with extra comments pertaining to the script for the Voiceover that Jake will do in a future sprint. 
+Tina will use the Coursework Brief from the Client (Mark Ware) and many online resources along with the official Scrum website. Jake will use the course notes and tutorials along with some sort of word processor to create the document (there is some flexibility here and will be explored).  Mark and Dean will use activity list (maybe) and lecture slides/tutorial in order to create their budgets, possibly in Excel, Project etc. Accompany word document in something like Microsoft Word. Zainab will be doing some research using google etc, Microsoft Powerpoint and Microsoft Word along with other team members peer review. 
+ 
+IMPROVEMENTS, IDEAS: 
+Nothing suggested for now, agreement between all team members on current structure and methodologies. 
+ 
+CONFIRMING ATTENDENCE FOR IMPORTANT ESTIMATES MEETING:
+TBC.
+ 
+ 
+ 
+Proposed Scrum Agenda 2
+
+#########################################
+#########################################
+Meeting 4 (24/03/2021)
+
+Talked about the tasks which were set from last week, and went through them without Dean as he was busy with his job tonight.
+
+Started with Jake looking at the Work break down structure and as a team we discussed the two different types of WBS' (Activity and Product based) - as a group we thought both were really good for the overall project but we stuck with the Product Based WBS.
+
+We then went through the powerpoint with Zainab which was looking at the Catastrophe that happened in london with the Computerised Systems. Zainab had alot of information around the Project and the main aim of the deliverable.
+
+Looked at Deliverable 2 and noted that there needs to be a write up about the overall deliverable - make suggestions on how to add profitability. There needs to be a bit more added to D2, which includes looking at recommending whether to proceed or not. This could be done within 2-3 sprints.
+
+Looked at the Requirement traceability matrix with Tina and thought it looked good with an easy to read format whilst following all of the tasks needed for the coursework.
+
+At the end of the sprint we talked about who will carry out what for the next sprint which was noted by Tina (Hopefully).

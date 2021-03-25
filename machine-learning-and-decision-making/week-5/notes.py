@@ -1,4 +1,4 @@
-import numpy as np
+#import numpy as np
 
 def myFunOne():
     # number of iterations
@@ -107,3 +107,8 @@ def myFunFour():
     def der2(y):
         return 2*y
     
+def myFunFun():
+    def fun(x):
+        return x**2+x+20
+
+myFunFun()
