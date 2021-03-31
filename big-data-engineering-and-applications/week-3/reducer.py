@@ -1,5 +1,7 @@
 #!/usr/bin/python3
+
 import sys
+
 last_key = None
 running_total = 0
 
