@@ -120,3 +120,23 @@ export HADOOP_MAPPED_HOME=$HADOOP_HOME
 	yarn jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.2.2.jar pi 16 1000
 
 2.3 - A word count mapreduce task locally with python
+
+2.4 - Word count mapreduce on hadoop
+copy the file to the server (can paste it from terminal or download from bb)
+copy the file from the server locally, to hadoop file system
+	make a directory
+		hadoop fs -mkdir wordcount_demo
+	copy the file to a demo textfile
+		hadoop fs -copyFromLocal test.txt wordcount_demo/textfile.txt
+	check file has been moved
+		hadoop fs -ls wordcount_demo/textfile.txt
+
+execute the yarn job
+	yarn jar /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.2.2.jar \
+	-files /home/mark/mapper1.py,/home/mark/reducer.py \
+	-mapper  '/home/mark/mapper1.py' \
+	-reducer '/home/mark/reducer.py' \
+	-input 'wordcount_demo/textfile.txt' \
+	-output 'wordcount_demo/output_demo1'
+	
+There could also be errors on the read and write for the file.
