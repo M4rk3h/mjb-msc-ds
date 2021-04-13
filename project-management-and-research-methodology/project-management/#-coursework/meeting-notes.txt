@@ -1,4 +1,3 @@
-
 MSc Project Management
 Last edited: 20/03
 Initial Note
@@ -75,9 +74,7 @@ Nothing suggested for now, agreement between all team members on current structu
  
 CONFIRMING ATTENDENCE FOR IMPORTANT ESTIMATES MEETING:
 TBC.
- 
- 
- 
+
 Proposed Scrum Agenda 2
 
 #########################################
