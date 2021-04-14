@@ -1,3 +1,0 @@
-"0","saData %>% "
-"0","  count(word, sort = TRUE) %>% "
-"0","  head(n=5)"

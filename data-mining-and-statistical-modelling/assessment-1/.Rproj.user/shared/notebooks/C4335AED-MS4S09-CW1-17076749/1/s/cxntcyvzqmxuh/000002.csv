@@ -1,7 +1,0 @@
-"0","beta_spread <- ldaTopics %>%"
-"0","  mutate(topic = paste0(""topic"", topic)) %>%"
-"0","  spread(topic, beta) %>%"
-"0","  filter(topic1 > .001 | topic2 > .001) %>%"
-"0","  mutate(log_ratio = log2(topic2 / topic1))"
-"0",""
-"0","beta_spread"

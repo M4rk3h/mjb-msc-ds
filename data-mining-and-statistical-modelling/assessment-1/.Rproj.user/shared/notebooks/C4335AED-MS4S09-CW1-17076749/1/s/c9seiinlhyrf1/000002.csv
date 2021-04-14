@@ -1,6 +1,0 @@
-"0","cleanSA <- saData %>%"
-"0","  anti_join(stop_words, by=c(""word""=""word""))"
-"0","# count again for a sanity check"
-"0","saData %>% "
-"0","  count(word, sort = TRUE) %>% "
-"0","  head(n = 5)"

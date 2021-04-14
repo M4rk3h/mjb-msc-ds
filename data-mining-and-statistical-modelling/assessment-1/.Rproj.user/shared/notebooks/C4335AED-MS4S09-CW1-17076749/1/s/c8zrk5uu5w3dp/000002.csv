@@ -1,8 +1,0 @@
-"0","# If the DTM has errors when creating an LDA,"
-"0","# find all empty rows and remove them."
-"0","#sum by raw each raw of the table"
-"0","raw.sum = apply(myDTM,1,FUN=sum)"
-"0","# remove the "
-"0","myDTM = myDTM[raw.sum!=0,]"
-"0",""
-"0","myLDA <- LDA(myDTM, k=2, control=list(seed=1234))"

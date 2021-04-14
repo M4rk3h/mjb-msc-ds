@@ -1,3 +1,0 @@
-"0","# Bing"
-"0","get_sentiments(""bing"") %>% "
-"0","  head(n = 5)"

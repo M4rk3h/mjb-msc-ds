@@ -1,7 +1,0 @@
-"0","nrcSA <- cleanSA %>%"
-"0","  inner_join(get_sentiments(""nrc"")) %>%"
-"0","  count(word, sort = T)"
-"2","Joining, by = c(""sentiment"", ""word"")
-"
-"0","nrcSA %>% "
-"0","  head(n = 5)"

@@ -1,4 +1,0 @@
-"0","topicD <- cleanSA"
-"0","topicD %>% "
-"0","  count(word, sort = T) %>% "
-"0","  head(n = 5)"
