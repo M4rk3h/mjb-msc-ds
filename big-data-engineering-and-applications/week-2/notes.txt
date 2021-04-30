@@ -1,25 +1,31 @@
-# install ubuntu in vm
-# update & upgrade
-sudo apt update && sudo apt upgrade -y
+Started with installing Ubuntu 20.04 (LTS) on a VirtualMachine on my Windows Workstation, with the settings below, with the default user as 'hadoop-cw' and a root user as 'mark'.
+	Name: worker-cw
+	Operating System: Ubuntu (64bit)
+	Base Memory: 14336 (14GB)
+	Processors: 2
+	Network: Bridged
 
-# install openssh
-sudo apt install openssh-server gedit
+After installing Ubuntu Desktop, the first thing I did was to update the VM, this can be done in the terminal with:
+	sudo apt update && sudo apt upgrade -y
 
-# check ssh status
-sudo systemctl status ssh
+Then I installed openssh so that I could 'remote' into my server from my local pc without the gui.
+	# install ssh & check the status
+	sudo apt install openssh-server && sudo systemctl status ssh
 
-# change hostname
-sudo nano /etc/hostname
+Whilst also checking the hostname to make sure it is 'worker-cw'
+	sudo hostname 
+	# if not 'worker-cw' can change with 'sudo nano /etc/hostname'
 
-# check hostname
-sudo hostname
+The next step is to assign the hosts for the hadoop Cluster
+	sudo nano /etc/hosts
 
-# set hosts
-sudo nano /etc/hosts
+	# add vm ip and bdea-master
+	127.0.0.1		localhost
+	#127.0.1.1		bdea-xyz (this would be VirtualMachine hostname)
 
-# add vm ip and bdea-master
-192.168.1.166	bdea-main
-192.168.1.171	bdea-worker
+	192.168.1.170	bdea-main
+	192.168.1.171	bdea-worker
+	192.168.1.172	hadoop-cw
 
 # install JAVA
 sudo apt install openjdk-8-jdk
