@@ -79,7 +79,8 @@ sudo netplan apply
 ssh-keygen -t rsa
 
 # copy master key (public) to worker
-ssh-copy-id mark@bdea-master
+ssh-copy-id mark@bdea-worker
+ssh-copy-id worker-cw@hadoop-cw
 
 ## EDIT the 4 files
 # hadoop-env.sh
