@@ -1,9 +1,12 @@
-Started with installing Ubuntu 20.04 (LTS) on a VirtualMachine on my Windows Workstation, with the settings below, with the default user as 'hadoop-cw' and a root user as 'mark'.
-	Name: worker-cw
-	Operating System: Ubuntu (64bit)
-	Base Memory: 14336 (14GB)
-	Processors: 2
-	Network: Bridged
+Here is the VM for the coursework:
+	TO DO: SCREENSHOT HERE
+
+	created a user as mark to set it up (as the other 2 had a username of mark)
+	created a new user from the terminal 
+	# adduser hadoop-cw
+	made the user a sudoer
+	# usermod -aG sudo hadoop-cw
+
 
 After installing Ubuntu Desktop, the first thing I did was to update the VM, this can be done in the terminal with:
 	sudo apt update && sudo apt upgrade -y
@@ -31,8 +34,12 @@ The next step is to assign the hosts for the hadoop Cluster
 sudo apt install openjdk-8-jdk
 
 # add to s/bin path variables to bashrc
-# JAVA
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+	sudo nano ~/.bashrc
+
+	# JAVA
+	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+
+	source ~/.bashrc
 
 # download hadoop
 wget https://archive.apache.org/dist/hadoop/common/hadoop-3.2.2/hadoop-3.2.2.tar.gz
@@ -59,7 +66,7 @@ source ~/.bashrc
 # reset the mac address, leave it on dhcp
 
 # can change to static ip below
-sudo nano /etc/netplan/*tab*
+sudo nano /etc/netplan/
 
 network:
   version: 2
@@ -78,15 +85,20 @@ sudo netplan apply
 # generate ssh keys
 ssh-keygen -t rsa
 
+from main node, copy ssh-keys to other workers
 # copy master key (public) to worker
-ssh-copy-id mark@bdea-worker
-ssh-copy-id worker-cw@hadoop-cw
+# ssh-copy-id hadoop-cw@bdea-main
+ssh-copy-id hadoop-cw@bdea-worker
+ssh-copy-id hadoop-cw@worker-cw
 
 ## EDIT the 4 files
-# hadoop-env.sh
+1 - hadoop-env.sh
+# sudo nano $CONF/hadoop-env.sh
+add this line
 JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
 
-# core-site.xml
+2 - core-site.xml
+# sudo nano $CONF/core-site.xml
 <configuration>
 	<propterty>
 		<name>fs.defaultFS</name>
@@ -94,16 +106,43 @@ JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
 	</property>
 </configuration>
 
-# hdfs-site.xml
+3 - hdfs-site.xml
+# sudo nano $CONF/hdfs-site.xml
+<configuration>
+        <property>
+                <name>dfs.namenode.name.dir</name>
+                <value>/usr/local/hadoop/data/nameNode</value>
+        </property>
+        <property>
+                <name>dfs.datanode.name.dir</name>
+                <value>/usr/local/hadoop/data/dataNode</value>
+        </property>
+        <property>
+                <name>dfs.replication</name>
+                <value>2</value>
+        </property>
+</configuration>
+
+4 - workers
+# sudo nano $CONF/workers
 
 # after configuring the 4 files on masters, copy to worker node
-scp $CONF/* mark@bdea-worker:/usr/local/hadoop/etc/hadoop
+scp $CONF/* hadoop-cw@bdea-worker:/usr/local/hadoop/etc/hadoop
+scp $CONF/* hadoop-cw@worker-cw:/usr/local/hadoop/etc/hadoop
 
 #### Mapreduce on Hadoop Cluster #### 
 2.1 - Configuration on hadoop
 
 2.1.1 Worker nodes
 make sure the yarn-site.xml within the workers are setup
+
+<configuration>
+        <property>
+                <name>yarn.resourcemanager.hostname</name>
+                <value>bdea-main</value>
+        </property>
+</configuration>
+
 
 2.1.2 - Master node
 make sure the yarn-site.xml is empty on main/master
@@ -116,7 +155,12 @@ export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 export HADOOP_HDFS_HOME=$HADOOP_HOME
 export HADOOP_MAPPED_HOME=$HADOOP_HOME
 
+source ~/bashrc 
+	then format the main server node (bdea-main) with
+hadoop namenode -format - this didn't work
+
 2.1.3 - SSH Error
+
 2.2 execute a demo mapreduce
 	start hadoop on master - start-dfs.sh
 	type - jps
