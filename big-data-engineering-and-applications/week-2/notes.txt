@@ -87,8 +87,8 @@ ssh-keygen -t rsa
 
 from main node, copy ssh-keys to other workers
 # copy master key (public) to worker
-# ssh-copy-id hadoop-cw@bdea-main
-ssh-copy-id mark@bdea-worker
+ssh-copy-id hadoop-cw@hadoop-main
+ssh-copy-id hadoop-cw@hadoop-worker
 ssh-copy-id hadoop-cw@worker-cw
 
 ## EDIT the 4 files
@@ -100,9 +100,9 @@ JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
 2 - core-site.xml
 # sudo nano $CONF/core-site.xml
 <configuration>
-	<propterty>
+	<property>
 		<name>fs.defaultFS</name>
-		<value>hdfs://bdea-master:9000</value>
+		<value>hdfs://hadoop-main:9000</value>
 	</property>
 </configuration>
 
@@ -139,10 +139,22 @@ make sure the yarn-site.xml within the workers are setup
 <configuration>
         <property>
                 <name>yarn.resourcemanager.hostname</name>
-                <value>bdea-main</value>
+                <value>hadoop-main</value>
         </property>
 </configuration>
 
+
+
+<configuration> 
+  <property> 
+    <name>yarn.resourcemanager.hostname</name>
+    <value>hadoop-main</value> 
+  </property> 
+  <property>
+    <name>fs.default.name</name>
+    <value>hdfs://localhost:9000</value> 
+  </property> 
+</configuration>
 
 2.1.2 - Master node
 make sure the yarn-site.xml is empty on main/master
@@ -155,11 +167,13 @@ export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 export HADOOP_HDFS_HOME=$HADOOP_HOME
 export HADOOP_MAPPED_HOME=$HADOOP_HOME
 
-source ~/bashrc 
+source ~/.bashrc 
 	then format the main server node (bdea-main) with
-hadoop namenode -format - this didn't work
+hadoop namenode -format
 
 2.1.3 - SSH Error
+This had a permissions error, which required some troubleshooting. I started by copying my sshkey from the main node,
+to all of the 
 
 2.2 execute a demo mapreduce
 	start hadoop on master - start-dfs.sh
