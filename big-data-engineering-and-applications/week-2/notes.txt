@@ -88,7 +88,7 @@ ssh-keygen -t rsa
 from main node, copy ssh-keys to other workers
 # copy master key (public) to worker
 # ssh-copy-id hadoop-cw@bdea-main
-ssh-copy-id hadoop-cw@bdea-worker
+ssh-copy-id mark@bdea-worker
 ssh-copy-id hadoop-cw@worker-cw
 
 ## EDIT the 4 files
