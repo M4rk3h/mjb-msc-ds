@@ -7,8 +7,15 @@ aws ec2 describe-key-pairs --key-name kram.pem
 -- create cluster with hadoop/hive
 aws emr create-cluster --release-label emr-5.14.0 --applications Name=Hadoop Name=Hive Name=Pig --service-role EMR_DefaultRole --ec2-attributes InstanceProfile=EMR_EC2_DefaultRole --instance-groups InstanceGroupType=MASTER,InstanceCount=1,InstanceType=m4.large InstanceGroupType=CORE,InstanceCount=2,InstanceType=m4.large
 
--- download key-pair to WSL
--- change kram.pem permissions
-chmod 400 kram.pem
+-- download key-pair
+-- import into PuttyGEN
+-- Save Private Key as Whatever
+-- Open Putty
+-- Paste Hostname
+hadoop@ec2-3-239-96-154.compute-1.amazonaws.com
+-- with ssh port 
+22 
 
-ssh -i ./kram.pem hadoop@ec2-3-239-96-154.compute-1.amazonaws.com
+-- go to ssh
+-- auth
+-- browse for private key
