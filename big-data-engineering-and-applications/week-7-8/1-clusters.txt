@@ -1,21 +1,40 @@
--- create a key-pair with gui
-https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#KeyPairs:
-
--- check key-pair with cli
-aws ec2 describe-key-pairs --key-name kram.pem
-
 -- create cluster with hadoop/hive
-aws emr create-cluster --release-label emr-5.14.0 --applications Name=Hadoop Name=Hive Name=Pig --service-role EMR_DefaultRole --ec2-attributes InstanceProfile=EMR_EC2_DefaultRole --instance-groups InstanceGroupType=MASTER,InstanceCount=1,InstanceType=m4.large InstanceGroupType=CORE,InstanceCount=2,InstanceType=m4.large
+aws emr create-cluster --release-label emr-5.14.0 --applications Name=Hadoop Name=Hive Name=Pig --service-role EMR_DefaultRole --ec2-attributes KeyName=kram InstanceProfile=EMR_EC2_DefaultRole --instance-groups InstanceGroupType=MASTER,InstanceCount=1,InstanceType=m4.large InstanceGroupType=CORE,InstanceCount=2,InstanceType=m4.large
 
--- download key-pair
--- import into PuttyGEN
--- Save Private Key as Whatever
--- Open Putty
--- Paste Hostname
-hadoop@ec2-3-239-96-154.compute-1.amazonaws.com
--- with ssh port 
-22 
+-- ssh into the cluster
+aws emr ssh --cluster-id j-38JKIRK31TFVK --key-pair-file .\kram.pem
 
--- go to ssh
--- auth
--- browse for private key
+-- describe the cluster
+aws emr describe-cluster --cluster-id j-38JKIRK31TFVK
+
+-- download some data on the vm
+wget https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/features.zip
+
+-- unzip features
+unzup features.zip
+
+-- check head
+head features.txt
+
+-- run hive
+hive
+
+-- in hive, create a table
+CREATE TABLE hive_features ( feature_id BIGINT, feature_name STRING, feature_class STRING,state_alpha STRING,prim_lat_dec DOUBLE,prim_long_dec DOUBLE,elev_in_ft BIGINT)ROW FORMAT DELIMITEDFIELDS TERMINATED BY '|'LINES TERMINATED BY '\n';
+
+-- load the data in hive
+LOAD DATA LOCAL INPATH './features.txt' OVERWRITE INTO TABLE hive_features;
+
+-- select the data we just input
+SELECT state_alpha, COUNT(*) FROM hive_features GROUP BY state_alpha;
+
+ -- copy data to DynamoDB
+ First create a table on DynamoDB
+	name: Features
+	primaryKey: Id 
+		dataType: Number
+	Read Capacity Units: 10
+	Write Capacity Units: 10
+
+-- create external hive table as DynamoDB
+CREATE EXTERNAL TABLE ddb_features(feature_id BIGINT, feature_name STRING, feature_class STRING, state_alpha STRING, prim_lat_dec DOUBLE, prim_long_dec DOUBLE, elev_in_ft BIGINT) STORED BY 'org.apache.hadoop.hive.dynamodb.DynamoDBStorageHandler'TBLPROPERTIES("dynamodb.table.name" = "features", "dynamodb.column.mapping" = "feature_id:id, feature_name: Name, feature_class:Class, state_alpha:State, prim_lat_dec:Latitude, prim_long_dec:Longitude, elev_in_ft:Elevation");
