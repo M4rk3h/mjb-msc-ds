@@ -66,7 +66,7 @@ source ~/.bashrc
 # reset the mac address, leave it on dhcp
 
 # can change to static ip below
-sudo nano /etc/netplan/
+sudo nano /etc/netplan/01-network-manager-all.yaml
 
 network:
   version: 2
@@ -99,6 +99,7 @@ JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
 
 2 - core-site.xml
 # sudo nano $CONF/core-site.xml
+
 <configuration>
 	<property>
 		<name>fs.defaultFS</name>
@@ -108,6 +109,7 @@ JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
 
 3 - hdfs-site.xml
 # sudo nano $CONF/hdfs-site.xml
+
 <configuration>
         <property>
                 <name>dfs.namenode.name.dir</name>
