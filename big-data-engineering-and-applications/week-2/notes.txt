@@ -182,7 +182,7 @@ to all of the
 	list yarn nodes - yarn node -list
 	
 	test a demo map reduce task
-	yarn jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.2.2.jar pi 16 1000
+	yarn jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.2.2.jar pi 16 50000
 
 2.3 - A word count mapreduce task locally with python
 
@@ -198,9 +198,9 @@ copy the file from the server locally, to hadoop file system
 
 execute the yarn job
 	yarn jar /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.2.2.jar \
-	-files /home/mark/mapper1.py,/home/mark/reducer.py \
-	-mapper  '/home/mark/mapper1.py' \
-	-reducer '/home/mark/reducer.py' \
+	-files /home/hadoop-cw/Downloads/mapper.py,/home/hadoop-cw/Downloads/reducer.py \
+	-mapper  '/home/hadoop-cw/Downloads/mapper.py' \
+	-reducer '/home/hadoop-cw/Downloads/reducer.py' \
 	-input 'wordcount_demo/textfile.txt' \
 	-output 'wordcount_demo/output_demo1'
 	
