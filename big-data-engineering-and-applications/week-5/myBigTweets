@@ -1,0 +1,305 @@
+[{
+    "created_at": "Thu May 20 14:33:35 +0000 2021",
+    "id": 1395387231897112577,
+    "id_str": "1395387231897112577",
+    "text": "RT @MayWongCNA: #UN @RapporteurUn says #Myanmar citizens \"cannot afford for history to repeat itself\" as he welcomes latest sanctions by #U\u2026",
+    "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+    "truncated": false,
+    "in_reply_to_status_id": null,
+    "in_reply_to_status_id_str": null,
+    "in_reply_to_user_id": null,
+    "in_reply_to_user_id_str": null,
+    "in_reply_to_screen_name": null,
+    "user": {
+        "id": 1357251254423027714,
+        "id_str": "1357251254423027714",
+        "name": "Hnin Wai Aung",
+        "screen_name": "HninWai41608439",
+        "location": null,
+        "url": null,
+        "description": null,
+        "translator_type": "none",
+        "protected": false,
+        "verified": false,
+        "followers_count": 43,
+        "friends_count": 51,
+        "listed_count": 0,
+        "favourites_count": 621,
+        "statuses_count": 1631,
+        "created_at": "Thu Feb 04 08:55:13 +0000 2021",
+        "utc_offset": null,
+        "time_zone": null,
+        "geo_enabled": false,
+        "lang": null,
+        "contributors_enabled": false,
+        "is_translator": false,
+        "profile_background_color": "F5F8FA",
+        "profile_background_image_url": "",
+        "profile_background_image_url_https": "",
+        "profile_background_tile": false,
+        "profile_link_color": "1DA1F2",
+        "profile_sidebar_border_color": "C0DEED",
+        "profile_sidebar_fill_color": "DDEEF6",
+        "profile_text_color": "333333",
+        "profile_use_background_image": true,
+        "profile_image_url": "http://pbs.twimg.com/profile_images/1357251516957155329/JWx_LEgF_normal.jpg",
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1357251516957155329/JWx_LEgF_normal.jpg",
+        "default_profile": true,
+        "default_profile_image": false,
+        "following": null,
+        "follow_request_sent": null,
+        "notifications": null,
+        "withheld_in_countries": []
+    },
+    "geo": null,
+    "coordinates": null,
+    "place": null,
+    "contributors": null,
+    "retweeted_status": {
+        "created_at": "Thu May 20 13:12:17 +0000 2021",
+        "id": 1395366771046055938,
+        "id_str": "1395366771046055938",
+        "text": "#UN @RapporteurUn says #Myanmar citizens \"cannot afford for history to repeat itself\" as he welcomes latest sanctio\u2026 https://t.co/7mZqnlJ1QY",
+        "source": "<a href=\"http://twitter.com/download/android\" rel=\"nofollow\">Twitter for Android</a>",
+        "truncated": true,
+        "in_reply_to_status_id": null,
+        "in_reply_to_status_id_str": null,
+        "in_reply_to_user_id": null,
+        "in_reply_to_user_id_str": null,
+        "in_reply_to_screen_name": null,
+        "user": {
+            "id": 1363523274,
+            "id_str": "1363523274",
+            "name": "May Wong",
+            "screen_name": "MayWongCNA",
+            "location": "Bangkok, Thailand ",
+            "url": "http://www.channelnewsasia.com",
+            "description": "Senior Indochina Correspondent @ChannelNewsAsia (Thailand, Myanmar, Vietnam, Cambodia, Laos) Formerly based in Myanmar. Now Bangkok and around the region",
+            "translator_type": "none",
+            "protected": false,
+            "verified": true,
+            "followers_count": 162860,
+            "friends_count": 3350,
+            "listed_count": 723,
+            "favourites_count": 1510,
+            "statuses_count": 16410,
+            "created_at": "Fri Apr 19 04:11:35 +0000 2013",
+            "utc_offset": null,
+            "time_zone": null,
+            "geo_enabled": false,
+            "lang": null,
+            "contributors_enabled": false,
+            "is_translator": false,
+            "profile_background_color": "C0DEED",
+            "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_image_url_https": "https://abs.twimg.com/images/themes/theme1/bg.png",
+            "profile_background_tile": false,
+            "profile_link_color": "1DA1F2",
+            "profile_sidebar_border_color": "C0DEED",
+            "profile_sidebar_fill_color": "DDEEF6",
+            "profile_text_color": "333333",
+            "profile_use_background_image": true,
+            "profile_image_url": "http://pbs.twimg.com/profile_images/1018562929388445696/kpQTrVr1_normal.jpg",
+            "profile_image_url_https": "https://pbs.twimg.com/profile_images/1018562929388445696/kpQTrVr1_normal.jpg",
+            "profile_banner_url": "https://pbs.twimg.com/profile_banners/1363523274/1531680497",
+            "default_profile": true,
+            "default_profile_image": false,
+            "following": null,
+            "follow_request_sent": null,
+            "notifications": null,
+            "withheld_in_countries": []
+        },
+        "geo": null,
+        "coordinates": null,
+        "place": null,
+        "contributors": null,
+        "is_quote_status": false,
+        "extended_tweet": {
+            "full_text": "#UN @RapporteurUn says #Myanmar citizens \"cannot afford for history to repeat itself\" as he welcomes latest sanctions by #US #UK #Canada against #military regime &amp; individuals. He hopes actions \"will be a wake-up call\" to all. #WhatsHappeningInMyanmar \nhttps://t.co/uvD34oa5zb",
+            "display_text_range": [
+                0,
+                280
+            ],
+            "entities": {
+                "hashtags": [
+                    {
+                        "text": "UN",
+                        "indices": [
+                            0,
+                            3
+                        ]
+                    },
+                    {
+                        "text": "Myanmar",
+                        "indices": [
+                            23,
+                            31
+                        ]
+                    },
+                    {
+                        "text": "US",
+                        "indices": [
+                            121,
+                            124
+                        ]
+                    },
+                    {
+                        "text": "UK",
+                        "indices": [
+                            125,
+                            128
+                        ]
+                    },
+                    {
+                        "text": "Canada",
+                        "indices": [
+                            129,
+                            136
+                        ]
+                    },
+                    {
+                        "text": "military",
+                        "indices": [
+                            145,
+                            154
+                        ]
+                    },
+                    {
+                        "text": "WhatsHappeningInMyanmar",
+                        "indices": [
+                            231,
+                            255
+                        ]
+                    }
+                ],
+                "urls": [
+                    {
+                        "url": "https://t.co/uvD34oa5zb",
+                        "expanded_url": "https://www.ohchr.org/EN/NewsEvents/Pages/DisplayNews.aspx?NewsID=27106&LangID=E",
+                        "display_url": "ohchr.org/EN/NewsEvents/\u2026",
+                        "indices": [
+                            257,
+                            280
+                        ]
+                    }
+                ],
+                "user_mentions": [
+                    {
+                        "screen_name": "RapporteurUn",
+                        "name": "UN Special Rapporteur Tom Andrews",
+                        "id": 1300892343915229193,
+                        "id_str": "1300892343915229193",
+                        "indices": [
+                            4,
+                            17
+                        ]
+                    }
+                ],
+                "symbols": []
+            }
+        },
+        "quote_count": 36,
+        "reply_count": 9,
+        "retweet_count": 239,
+        "favorite_count": 312,
+        "entities": {
+            "hashtags": [
+                {
+                    "text": "UN",
+                    "indices": [
+                        0,
+                        3
+                    ]
+                },
+                {
+                    "text": "Myanmar",
+                    "indices": [
+                        23,
+                        31
+                    ]
+                }
+            ],
+            "urls": [
+                {
+                    "url": "https://t.co/7mZqnlJ1QY",
+                    "expanded_url": "https://twitter.com/i/web/status/1395366771046055938",
+                    "display_url": "twitter.com/i/web/status/1\u2026",
+                    "indices": [
+                        117,
+                        140
+                    ]
+                }
+            ],
+            "user_mentions": [
+                {
+                    "screen_name": "RapporteurUn",
+                    "name": "UN Special Rapporteur Tom Andrews",
+                    "id": 1300892343915229193,
+                    "id_str": "1300892343915229193",
+                    "indices": [
+                        4,
+                        17
+                    ]
+                }
+            ],
+            "symbols": []
+        },
+        "favorited": false,
+        "retweeted": false,
+        "possibly_sensitive": false,
+        "filter_level": "low",
+        "lang": "en"
+    },
+    "is_quote_status": false,
+    "quote_count": 0,
+    "reply_count": 0,
+    "retweet_count": 0,
+    "favorite_count": 0,
+    "entities": {
+        "hashtags": [
+            {
+                "text": "UN",
+                "indices": [
+                    16,
+                    19
+                ]
+            },
+            {
+                "text": "Myanmar",
+                "indices": [
+                    39,
+                    47
+                ]
+            }
+        ],
+        "urls": [],
+        "user_mentions": [
+            {
+                "screen_name": "MayWongCNA",
+                "name": "May Wong",
+                "id": 1363523274,
+                "id_str": "1363523274",
+                "indices": [
+                    3,
+                    14
+                ]
+            },
+            {
+                "screen_name": "RapporteurUn",
+                "name": "UN Special Rapporteur Tom Andrews",
+                "id": 1300892343915229193,
+                "id_str": "1300892343915229193",
+                "indices": [
+                    20,
+                    33
+                ]
+            }
+        ],
+        "symbols": []
+    },
+    "favorited": false,
+    "retweeted": false,
+    "filter_level": "low",
+    "lang": "en",
+    "timestamp_ms": "1621521215782"
+}]
