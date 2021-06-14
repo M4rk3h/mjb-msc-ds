@@ -1,22 +1,21 @@
 -- 1
-select * from mytweets
-order by sum(tweets)
-group by location;
+Select * From XYZ
+ORDER BY sum(tweets)
 
 -- 2
-select * from mytweets
-where sum(hashtags)
-order by hashtags
+select * from XYZ
+WHERE SUM(hashtags)
+ORDER BY hashtags
 
 -- 3
-select * from mytweets
-order by tweets
+select * from XYZ
+ORDER BY tweets
 
 -- 4 
-select * from mytweets
-where sum(mentions)
-order by mentions
+select * from XYZ
+WHERE SUM(mentions)
+ORDER BY mentions
 
 -- 5
-select * from mytweets
-order by sum(mentions)
+select * from XYZ
+ORDER BY SUM(mentions)

@@ -1,0 +1,24 @@
+response = client.create_table(TableName = 'GenreAlbumTitle',
+    KeySchema = [{
+            'AttributeName': 'Genre',
+            'KeyType': 'HASH'
+        },
+        {
+            'AttributeName': 'AlbumTitle',
+            'KeyType': 'RANGE'
+        }
+    ],
+    AttributeDefinitions = [{
+            'AttributeName': 'Genre',
+            'AttributeType': 'S'
+        },
+        {
+            'AttributeName': 'AlbumTitle',
+            'AttributeType': 'S'
+        }
+    ],
+    ProvisionedThroughput = {
+        'ReadCapacityUnits': 5,
+        'WriteCapacityUnits': 5
+    })
+`

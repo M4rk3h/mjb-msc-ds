@@ -2,10 +2,10 @@
  aws emr create-cluster --release-label emr-5.14.0 --applications Name=Hadoop Name=Hive Name=Pig --use-default-roles --ec2-attributes KeyName=kram --instance-type m5.xlarge
  
 -- ssh into the cluster
-aws emr ssh --cluster-id j-1RRQ6DLV1C4PI --key-pair-file .\kram.pem
+aws emr ssh --cluster-id j-1RRQ6DLV1C4PI --key-pair-file .kram.pem
 
 -- describe the cluster
-aws emr describe-cluster --cluster-id j-1RRQ6DLV1C4PI
+aws emr describe-cluster --cluster-id j-38JKIRK31TFVK
 
 -- download some data on the vm
 wget https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/samples/features.zip
