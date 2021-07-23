@@ -1,5 +1,0 @@
-"0","ROCRperf <- performance(ROCRpred, ""tpr"", ""fpr"")
-"
-"2","Error in performance(ROCRpred, ""tpr"", ""fpr"") : 
-  could not find function ""performance""
-"

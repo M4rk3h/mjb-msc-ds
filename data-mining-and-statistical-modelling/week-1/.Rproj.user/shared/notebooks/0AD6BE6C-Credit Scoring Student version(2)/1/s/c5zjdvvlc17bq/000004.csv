@@ -1,5 +1,0 @@
-"0","#Conduct a Binary Logistic Regression (using the two variables you deem most important)"
-"0","model1 <- glm(Serious_2yrs ~ Age + No_90_DaysLate,"
-"0","              data =  DataF1,"
-"0","              family = binomial)"
-"0",""

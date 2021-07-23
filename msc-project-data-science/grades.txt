@@ -1,0 +1,24 @@
+applied-statistics
+1 - 70/100
+2 - 44/100
+
+big-data
+1 - 43/60
+2 - 31/40
+
+data-mining
+1 - 60/100
+2 - 43/100
+
+machine-learning
+1.1 - 24/40
+1.2 - 6/10
+2 - 51/100
+
+principles-of-computing
+1 - 76/100
+2 - 91/100
+
+project-management-and-research
+1 - 86/100
+2 - 64/100

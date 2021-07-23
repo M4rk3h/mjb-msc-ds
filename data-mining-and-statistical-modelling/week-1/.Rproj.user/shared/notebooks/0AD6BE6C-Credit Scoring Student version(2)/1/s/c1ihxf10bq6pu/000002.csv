@@ -1,3 +1,0 @@
-"0","# make predictions"
-"0","predictions <- predict(model1, type = ""response"")"
-"0","# predictions"

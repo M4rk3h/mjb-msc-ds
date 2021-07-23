@@ -1,7 +1,0 @@
-1-microsoft-project-tutorials
-2-approaches-to-project-management
-3-scope-management
-4-time-management
-5-resource-management
-6-cost-management
-7-estimating

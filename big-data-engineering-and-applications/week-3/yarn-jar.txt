@@ -1,6 +1,0 @@
-yarn jar /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-3.2.2.jar \
--files mapper-1.py, reducer-1.py \
--mapper '/home/mark/myfiles/mapper-1.py' \
--reducer '/home/mark/myfiles/reducer-1.py' \
--input 'wordcount_demo/testFile.txt' \
--output 'wordcount_demo/mark-demo'

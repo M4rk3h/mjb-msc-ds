@@ -1,2 +1,0 @@
-"0","#Read in the data"
-"0","Data <- read.csv(""data/credit-score.csv"")"

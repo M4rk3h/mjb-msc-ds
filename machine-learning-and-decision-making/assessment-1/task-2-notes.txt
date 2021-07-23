@@ -1,8 +1,0 @@
-TASK 2
-This section will look at using unsupervised models on the datasets and the few steps required before unsupervised models can actually be run. To start with I found a little function called sklearn.utils.shuffle which can shuffle the dataset, I did this in the hopes to remove any bias within the dataset.
-
-I then created the features I wanted to model, and added a standard scaller to the dataset. Now this has been done, i was now able to start with my first unsupervised model, I started with a Gaussian Mixture.
-
-Here i added a few pros and cons for the model from scikit learn, I then set my seed and creared an instance of Gaussian Mixture, which then allows me to fit this and print the means. These values can then be scorred via percentage of accuracy with a silhouette score whilst also adding the time it took. (as some can take a while!)
-
-After getting the silhouette score, my next step was to run another model and see how these compare to one another.
