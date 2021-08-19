@@ -1,9 +1,10 @@
 ---
 title: "Web Scraping Data"
 author: "Mark Baber"
-date: "29/06/2021"
-output: html_document
+date: "2021"
+output: word_document
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -84,7 +85,7 @@ print(df.staff.gp)
 Firstly, it looks like the date from the website has been defaulted to the older date, and I was unable to switch it to work with this code. I will be mindful with this going forward.
 
 
-![Date Picker - Stats Wales](date-picker.png "Date Picker")
+![Date Picker - Stats Wales](img/date-picker.png "Date Picker")
 
 Now that the data has been sliced and carefully selected the parts of the data to keep,
 I want to try and get the Total added onto the end of the table which will make analysing it a bit easier.
@@ -120,7 +121,8 @@ plot.one <-
   geom_text(aes(label = Total, y = (Total/2)), size = 3)
 
 plot.one + 
-  labs(title = "Number of GPs employed in general practices", subtitle = "by GP type and local health board (30-September-2020)") +
+  labs(title = "Number of GPs employed in general practices", 
+       subtitle = "by GP type and local health board (30-September-2020)") +
   theme(axis.title.x=element_blank(),
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank())
@@ -177,6 +179,18 @@ plot.one.no.wales +
   theme(axis.title.x=element_blank(),
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank())
+
+write.csv(df.no.wales)
+# write.csv(df.no.wales, file = "data/gps-employed.csv")
+```
+
+Here we can also pull some descriotive analysis from the dataset using a library called funModeling.
+
+```{r}
+library(funModeling)
+profiling_num(df.no.wales)
+
+# write.csv(profiling_num(df.no.wales), file = "data/desc-gps-employed.csv")
 ```
 
 Now we have the staff employed per HB within Wales, it would be interesting to see how the population is within these HB areas.
@@ -286,6 +300,15 @@ plot.two.no.wales +
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank())
 
+# write.csv(df.pop.no.wales, file = "data/pop-estimations.csv")
+
+```
+
+This data can also be 'profiled' to draw out some descriptive statistics from the data frame.
+```{r}
+profiling_num(df.pop.no.wales)
+
+# write.csv(profiling_num(df.pop.no.wales), file = "data/desc-population.csv")
 ```
 
 Now lets try to do a time series ( big ask :P ) with the dataset, the data might need to be manipulated even more, but lets see.
@@ -323,18 +346,12 @@ df.bevan1 <- rbind(df.pop.no.wales[6,])
 df.bevan2 <- df.no.wales[6,]
 print(paste(round(df.bevan1$Total/df.bevan2$Total), "people need to be seen by 1 doctor.")) 
 ```
-## Y - Exploring Population Health per Health Board
-Here I want to try and get some data around the general health and illness by local authority and health board, although this section will mainly look at the health via health board. 
+
+
 
 ```{r}
-# set population per health board url
-healthPop <- "https://statswales.gov.wales/Catalogue/National-Survey-for-Wales/Population-Health/Adult-general-health-and-illness/genhealthillness-by-localauthorityhealthboard"
-# grab content from url
-content.healthPop <- read_html(healthPop)
-# grab the tables from the page
-#get.tables.healthPop <- healthPop %>% 
-  #html_element("table") %>% 
-  #html_table()
+url <- "https://nwssp.nhs.wales/ourservices/primary-care-services/primary-care-services-documents/gp-practice-analysis-docs/patient-registrations-july-2021"
+
 
 ```
 
@@ -354,15 +371,27 @@ citation(package = "taRifx")
 
 ### - Other datasets to look at:
 - [Population by area, ethnicity and gender](https://statswales.gov.wales/Catalogue/Equality-and-Diversity/Ethnicity/Census-2001/Population-by-Area-Ethnicity-Gender)
+
 - [Population estimates by ethnicity and year](https://statswales.gov.wales/Catalogue/Equality-and-Diversity/Equality/Population-Estimates-by-Ethnicity-Year)
+
 - [Population estimates by local authority and ethnicity](https://statswales.gov.wales/Catalogue/Population-and-Migration/Population/Estimates/Ethnicity/PopulationEstimates-by-Localauthority-Ethnicity)
+
 - [Population estimates by local authority, ethnicity and age](https://statswales.gov.wales/Catalogue/Equality-and-Diversity/Ethnicity/Population-Estimates/PopulationEstimates-by-LocalAuthority-Ethnicity-Age)
+
 - [Population estimates by local authority, gender and ethnicity](https://statswales.gov.wales/Catalogue/Equality-and-Diversity/Ethnicity/Population-Estimates/PopulationEstimates-by-LocalAuthority-Gender-Ethnicity)
+
 - [Population estimates by year and National Park](https://statswales.gov.wales/Catalogue/Population-and-Migration/Population/Estimates/National-Park/PopulationEstimates-by-Year-NationalPark)
+
 - [Population projection components of change by year and National park area](https://statswales.gov.wales/Catalogue/Population-and-Migration/Population/Projections/National-Park/2014-Based/populationprojectioncomponentsofchange-by-year-nationalparkarea)
+
 - [Population projections by year and national park](https://statswales.gov.wales/Catalogue/Population-and-Migration/Population/Projections/National-Park/2013-based/populationprojections-by-year-nationalpark)
+
 - [Population projections by year and national park](https://statswales.gov.wales/Catalogue/Population-and-Migration/Population/Projections/National-Park/2014-Based/populationprojections-by-year-nationalpark)
+
 - [Private household population by national park and year](https://statswales.gov.wales/Catalogue/Housing/Households/Projections/National-Park/2013-based/privatehouseholdpopulation-by-nationalpark-year)
+
 - [Private household population by national park and year](https://statswales.gov.wales/Catalogue/Housing/Households/Projections/National-Park/2014-Based/privatehouseholdpopulation-by-nationalpark-year)
+
 - [Projected private household population by local authority and year](https://statswales.gov.wales/Catalogue/Housing/Households/Projections/Local-Authority/2011-Based/ProjectedPrivateHouseholdPopulation-by-LocalAuthority-Year)
+
 - [Projected private household population by year](https://statswales.gov.wales/Catalogue/Housing/Households/Projections/National/2011-Based/ProjectedPrivateHouseholdPopulation-by-Year)
