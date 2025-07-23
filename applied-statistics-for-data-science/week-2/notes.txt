@@ -1,0 +1,64 @@
+Using a lot of classical methods for statistical modeling 
+
+Starting with Probabilities
+	independence
+	dependence
+	calculations around probabilities
+	significants?
+	finding errors with data
+
+2 tailed test doesn't matter where the tail goes
+1 tailed test looks which direction does tail go.
+
+H0 - Null is the provided hypothesis
+	coin is fair
+H1 - Alternative hypothesis
+	coin is not fair
+
+By cutting off at 5% (0.05 p value), this means we will stick with
+	H0 95% of the time.
+	
+Power of the test
+	(1 - B) B = Beta ($\beta)
+
+Testing For Normality
+	Data is Normal
+To have normalised data, the 'bell' needs to be evenly distributed.
+	Test for Normality
+
+If true look at Normal Distrubted tests in statistical reference
+( Which are? )
+
+Non Parametric
+	Data is skewed/ranked/scored.
+
+H0: Mu(mean) = c
+H0: Mu(mean) != c
+	
+H0: m(median) = c
+H0: m(median) != c
+
+	Mean can be skewed by outliers, 
+so alternative is to test the median
+
+H0: f(x1) = f(x2)
+H0: f(x1) != f(x2)
+Tests the distribution of data.
+
+H0 : D0 = 0
+H0 : D0 != 0
+Looking at the same data set over different times
+	Weight in's at start and end of diet/exercise
+
+2 Correlation
+	2.3 - Non Normal distributed dataset, so we'll have to look at the bottom plot.
+	Boxplot is showing the true mean difference, there is not enough evidence to reject null hypothesis.
+	
+	Signed Rank is a non parametric
+	Signed Rank 	S 	-55.5 	Pr >= |S| 	0.2529
+	P value is > 0.05 
+	Not enough evidence to show the strenght between the 2
+	
+	Pooled 	Equal 	28 	3.65 	0.0011
+	Needs to be rejected as it is < 0.05 (significant difference)
+	There is enough evidence to reject them. 

@@ -1,0 +1,267 @@
+---
+title: "Lesson-1"
+author: "Mark Baber"
+date: "26/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1 Working With R
+To get started with R, lets go through some basics.
+
+```{r}
+height <- 3
+weight <- 6
+area <- height*weight
+area
+```
+
+### More basic things with maths
+```{r}
+x <- rnorm(5)
+x <- 2+2
+y <- 2*x
+print(x)
+print(y)
+```
+
+### Classes
+```{r}
+class(TRUE)
+class(NA)
+class(2)
+class(2.5)
+```
+
+### More class types
+```{r}
+is.integer(2.5)
+is.integer(2)
+is.integer(2L)
+
+as.integer(2.5)
+as.integer(T)
+as.integer(F)
+
+class("Hello World")
+```
+
+## Vectors
+```{r}
+drawn_suits <- c("hearts","spades","diamonds","diamonds","spades")
+length(drawn_suits)
+length(area)
+is.vector(area)
+remain <- c(11,12,11,13)
+suits <- c("spades","hearts","diamonds","clubs")
+```
+
+## Give names to the vector entries
+```{r}
+names(remain) <- suits
+print(remain)
+remainn <- c(spades=11, hearts=12, diamonds=11,clubs=13)
+print(remain)
+```
+
+## Other special vectors
+```{r}
+LETTERS
+letters
+1:1000
+drawn_ranks <- c(7,5,"K","Q",4)
+as.integer(drawn_ranks)
+```
+
+## Vector arithmetic
+```{r}
+earnings <- c(50,100,30)
+earnings + 10
+```
+
+## Subsetting
+```{r}
+remain
+remain[1]
+remain["spades"]
+remain[c("spades","hearts")]
+remain[-1]
+remain[c(1,2)]
+remain[c(T,F,F,F)]
+```
+
+# EXAMPLE-1 
+```{r}
+age <- c(01,03,05,02,11,09,03,09,12,03)
+weight <-c(4.4,5.3,7.2,5.2,8.5,7.3,6.0,10.4,10.2,6.17)
+# mean, sd, correlation & plot the data
+mean(weight)
+sd(weight)
+cor(age,weight)
+plot(age,weight)
+# pearsons correlation
+cor.test(age,weight)
+# os command getwd
+getwd()
+```
+
+# 2 Drataframes
+```{r}
+names <- c("Ann","Ben","David")
+age <- c(28,30,9)
+child <- c(F,F,T)
+people <- data.frame(names,age,child)
+print(people)
+names(people) <- c("Names","Age","Child")
+str(people)
+```
+
+```{r}
+patientID <- c(1,2,3,4)
+age <- c(25,34,28,52)
+diabetes <- c("Type1","Type2","Type1","Type1")
+status <-c("Poor","Improved","Excellent","Poor")
+patientData <- data.frame(patientID, age, diabetes, status)
+```
+
+```{r}
+patientData[1:2]
+patientData[c("diabetes","status")]
+patientData$age
+table(patientData$diabetes,patientData$status)
+```
+
+```{r}
+patientData <- data.frame(patientID,age,diabetes,status, row.names=patientID)
+diabetes <- factor(diabetes)
+status <- factor(status, order=T, levels=c("Poor","Improved","Excellent"))
+str(patientData)
+summary(patientData)
+```
+
+# 3 Data Input
+```{r}
+# edit() function
+myData <- data.frame(age=numeric(0), gender=character(0), weight=numeric(0))
+myData <- edit(myData)
+myData
+```
+
+```{r}
+grades <- read.table("data/student-grades.txt", header=T, row.names="StudentID",sep = ",")
+print(grades)
+str(grades)
+# Dealing with character variables
+grades <- read.table("data/student-grades.txt", header=T, row.names="StudentID",sep = ",", stringsAsFactors = F)
+grades
+str(grades)
+# Example using colClasses option
+grades <- read.table("data/student-grades.txt",header=T, row.names="StudentID",sep = ",", colClasses=c("character","character","character","numeric","numeric","numeric"))
+```
+
+# 4 Data Management
+```{r}
+manager <- c(1,2,3,4,5)
+date<-c("24/10/14", "28/10/14","01/10/14","12/10/14","01/05/14")
+country<-c("US", "US", "UK", "UK", "UK")
+gender<-c("M","F","F","M", "F")
+age<-c(32,45,25,39,99)
+q1<-c(5,3,3,3,2)
+q2<-c(4,5,5,3,2)
+q3<-c(5,2,5,4,1)
+q4<-c(5,5,5,NA,2)
+q5<-c(5,5,2,NA,1)
+leadership <- data.frame(manager,date,country,gender,age,q1,q2,q3,q4,q5,stringsAsFactors=FALSE)
+leadership
+# create new variable to sum all q's
+sumq <- q1+q2+q3+q4+q5
+attach(leadership)
+leadership$sumq <- q1+q2+q3+q4+q5
+detach(leadership)
+leadership
+
+# Missing values
+leadership$age[leadership$age==99] <- NA
+leadership
+
+# Renaming variables
+names(leadership)[2] <- "testDate"
+leadership
+```
+
+# 5 Statistical tests in R
+## T-tests
+```{r}
+# For an independent 2-sample t-test:
+t.test(x~y) # where y is numeric and x is a binary factory.
+# for independent 2-group t-test:
+t.test(y1,y2) # where y1 and y2 are numeric.
+
+# for a paired samples t-test:
+t.test(y1,y2, paired=TRUE) # where y1 & y2 are numeric
+# finally for a one sample t-test:
+t.test(y, mu=3) # H0: mu=3
+```
+
+## Nonparametric tests
+```{r}
+# For independent 2-group Mann-Whitney U Test
+wilcox.test(y~A) # where y is numeric and A is a binary factor
+
+# For independent 2-group Mann-Whitney U Test
+wilcox.test(y,x) # where y and x are numeric
+# For dependent 2-group Wilcoxon Signed Rank Test
+wilcox.test(y1,y2,paired=TRUE) # where y1 and y2 are numeric
+# For Kruskal Wallis Test One Way Anova by Ranks
+kruskal.test(y~A) # where y1 is numeric and A is a factor
+
+# For the wilcox.test you can use the alternative="less"
+# or alternative="greater" option to specify a one tailed test.
+```
+
+## Multiple Linear Regression Example
+```{r}
+fit <- lm(y ~ x1 + x2 + x3, data=mydata)
+summary(fit) # show results
+# Other useful functions:
+coefficients(fit) # model coefficients
+confint(fit, level=0.95) # CIs for model parameters
+fitted(fit) # predicted values
+residuals(fit) # residuals
+anova(fit) # anova table
+vcov(fit) # covariance matrix for model parameters
+influence(fit) # regression diagnostics
+# For Diagnostic Plots
+# Diagnostic plots provide checks for heteroscedasticity, normality, and influential observations.
+# diagnostic plots
+layout(matrix(c(1,2,3,4),2,2)) # optional 4 graphs/page
+plot(fit)
+```
+
+## Anova
+```{r}
+# If you have been analyzing ANOVA designs in traditional statistical packages, you are likely to find R's
+# approach less coherent and user-friendly.
+# In the following examples lower case letters are numeric variables and upper case letters are factors.
+# One Way Anova (Completely Randomized Design)
+fit <- aov(y ~ A, data=mydataframe)
+# Multiple Comparisons
+# You can get Tukey HSD tests using the function below. By default, it calculates post hoc comparisons
+# on each factor in the model. You can specify specific factors as an option.
+# Tukey Honestly Significant Differences
+TukeyHSD(fit) # where fit comes from aov()
+```
+
+# Chi-Square Test
+```{r}
+# For 2-way tables you can use chisq.test(mytable) to test 
+# independence of the row and column variable.
+# By default, the p-value is calculated from the asymptotic chi-squared distribution of the test statistic.
+# Optionally, the p-value can be derived via Monte Carlo simultation.
+# Fisher Exact Test
+fisher.test(x) #provides an exact test of independence. x is a two dimensional contingency table in
+#matrix form.
+```

@@ -1,0 +1,25 @@
+Statistics is the hardest part of the course, and will become easier (later down the line).
+
+Just understand the output of a statistical test
+
+Understanding P Values and Errors etc
+
+This is what i'm trying to do
+This is what I found
+
+Maths by research?! - Scary stuff.
+
+Pose Questions - Hypothesis'
+Or find data and say what it shows
+categorical variables
+T-Tests - Groups
+ANOVA - Groups
+
+Year - Before and After
+Type - Error in Query Editor
+	Measurement 
+
+Pollution
+Carbon Monoxide
+
+PowerBI Documentation
